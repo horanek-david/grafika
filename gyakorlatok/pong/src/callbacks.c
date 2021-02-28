@@ -28,6 +28,17 @@ void motion(int x, int y)
     glutPostRedisplay();
 }
 
+void mouse(int button, int state, int x, int y)
+{
+    switch(button){
+		case GLUT_LEFT_BUTTON :
+			click_ball(&game, x, y);
+			break;
+	}
+	
+    glutPostRedisplay();
+}
+
 void keyboard(unsigned char key, int x, int y)
 {
     float position;
@@ -53,7 +64,7 @@ void idle()
     double elapsed_time;
    
     current_time = glutGet(GLUT_ELAPSED_TIME);
-    elapsed_time = (double)(current_time - last_frame_time) / 500; // Changed the speed to 500 instead of 1000.
+    elapsed_time = (double)(current_time - last_frame_time) / 500; /* Changed the speed to 500 instead of 1000. */
     last_frame_time = current_time;
 
     update_game(&game, elapsed_time);
