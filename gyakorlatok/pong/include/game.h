@@ -14,6 +14,8 @@ typedef struct Game
     Pad right_pad;
     int width;
     int height;
+	int left_pad_counter; /* I*/
+	int right_pad_counter; /* I*/
 } Game;
 
 /**
@@ -47,5 +49,7 @@ void move_right_pad(Game* game, float position);
  * @param radius ball radius.
  */
 void set_radius(Game* game, float radius, float limit_min, float limit_max);
+
+
 
 #endif /* GAME_H */

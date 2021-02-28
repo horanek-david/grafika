@@ -32,11 +32,36 @@ void update_game(Game* game, double time)
         game->ball.speed_x *= -1;
     }
 	
+	if (game->ball.x - game->ball.radius < -(2 * game->ball.radius)){
+		game->right_pad_counter += 1;
+		
+		float center_x;
+		float center_y;
+	
+		center_x = game->width / 2;
+		center_y = game->height / 2;
+		start_ball(&(game->ball), center_x, center_y);
+	}
+	
+	
+		
+		
 	/* Changed that the ball can only bounce back when it's hit one of the pads else it goes out. */
     if (game->ball.x + game->ball.radius > game->width - 50 && (game->ball.y >= game->right_pad.position && game->ball.y <= game->right_pad.position + game->right_pad.size)) {
         game->ball.x = game->width - game->ball.radius - 50;
         game->ball.speed_x *= -1;
     }
+	
+	if (game->ball.x + game->ball.radius > game->width + (2 * game->ball.radius) ){
+		game->left_pad_counter += 1;
+		
+		float center_x;
+		float center_y;
+	
+		center_x = game->width / 2;
+		center_y = game->height / 2;
+		start_ball(&(game->ball), center_x, center_y);
+	}
 	
     if (game->ball.y - game->ball.radius < 0) {
         game->ball.y = game->ball.radius;

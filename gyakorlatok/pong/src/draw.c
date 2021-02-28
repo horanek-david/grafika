@@ -1,11 +1,11 @@
 #include "draw.h"
-
+#include "stdlib.h"
 #include "GL/glut.h"
 
 void draw_game(Game* game)
 {
     float x1, x2, y1, y2;
-
+	
     x1 = 0;
     x2 = 50;
     y1 = game->left_pad.position;
@@ -53,5 +53,18 @@ void draw_game(Game* game)
     glColor3f(1.0, 0.9, 0.8);
     glutSolidSphere(game->ball.radius, 8, 8);
     glPopMatrix();
+	
+	char str[10];
+	sprintf(str, "%d - %d", game->left_pad_counter, game->right_pad_counter);
+	drawString(50, 50, str);
 }
 
+void drawString(float x, float y, char *string) {
+  glRasterPos2f(x, y);
+  
+  char* c;
+
+  for (c = string; *c != '\0'; c++) {
+    glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);  
+  }
+}

@@ -8,4 +8,9 @@
  */
 void draw_game(Game* game);
 
+/**
+ *
+ */
+void drawString(float x, float y, char *string);
+
 #endif /* DRAW_H */
