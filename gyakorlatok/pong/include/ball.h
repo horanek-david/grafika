@@ -29,4 +29,10 @@ void start_ball(Ball* ball, float x, float y);
  */
 void update_ball(Ball* ball, double time);
 
+/**
+ * Set radius.
+ * @param radius ball radius.
+ */
+void set_radius_ball(Ball* ball, float radius, float limit_min, float limit_max);
+
 #endif /* BALL_H */

@@ -42,8 +42,11 @@ void mouse(int button, int state, int x, int y)
 void keyboard(unsigned char key, int x, int y)
 {
     float position;
-
+	float radius;
+	
     position = game.left_pad.position;
+	radius = game.ball.radius;
+	
     switch (key) {
     case 'w':
         position -= 10;
@@ -51,9 +54,16 @@ void keyboard(unsigned char key, int x, int y)
     case 's':
         position += 10;
         break;
+	case '+':
+		radius += 5;
+		break;
+	case '-':
+		radius -= 5;
+		break;
     }
     move_left_pad(&game, position);
-
+	set_radius(&game, radius, 10.0, 100.0); /* The ball size minimum radius (10) and the maximum (100); */
+	
     glutPostRedisplay();
 }
 

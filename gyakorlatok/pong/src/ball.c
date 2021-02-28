@@ -20,3 +20,14 @@ void update_ball(Ball* ball, double time)
     ball->y += ball->speed_y * time;
 }
 
+void set_radius_ball(Ball* ball, float radius, float limit_min, float limit_max){
+	
+	if (radius < limit_min) {
+        ball->radius = limit_min;
+    } else if (radius > limit_max) {
+        ball->radius = limit_max;
+    }else{
+		ball->radius = radius;
+	}
+}
+

@@ -42,4 +42,10 @@ void move_left_pad(Game* game, float position);
  */
 void move_right_pad(Game* game, float position);
 
+/**
+ * Set radius.
+ * @param radius ball radius.
+ */
+void set_radius(Game* game, float radius, float limit_min, float limit_max);
+
 #endif /* GAME_H */

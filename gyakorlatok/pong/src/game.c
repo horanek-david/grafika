@@ -63,3 +63,8 @@ void click_ball(Game* game, int x, int y)
 {
     move_ball(&(game->ball), x, y);
 }
+
+void set_radius(Game* game, float radius, float limit_min, float limit_max)
+{
+    set_radius_ball(&(game->ball), radius, limit_min, limit_max);
+}
