@@ -48,19 +48,19 @@ void print_point(const float point[3]);
 void init_point(float result[3], const float x, const float y);
 
 /**
- * Initializes a shifted matrix.
+ * Initializes a translation matrix.
  */
 void init_shift_matrix(float matrix[3][3], const float p[3]);
 
 /**
- * Initializes a rotated matrix.
+ * Initializes a rotation matrix.
  */
 void init_rotate_matrix(float matrix[3][3], const float angle);
 
 /**
- * Initializes a scaled matrix.
+ * Initializes a scaling matrix.
  */
-void init_scale_matrix(float matrix[3][3], const float scale);
+void init_scale_matrix(float matrix[3][3], const float scale_x, const float scale_y );
 
 #endif // MATRIX_H
 
