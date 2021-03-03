@@ -6,11 +6,13 @@
  */
 typedef struct Ball
 {
-    float x;
-    float y;
-    float radius;
-    float speed_x;
-    float speed_y;
+	float x;
+	float y;
+	float radius;
+	float speed_x;
+	float speed_y;
+	float rotation;
+	float speed_rotation;
 } Ball;
 
 /**

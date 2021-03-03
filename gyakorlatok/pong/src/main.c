@@ -10,12 +10,12 @@
  */
 void set_callbacks()
 {
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutPassiveMotionFunc(motion);
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutPassiveMotionFunc(motion);
 	glutMouseFunc(mouse);
-    glutKeyboardFunc(keyboard);
-    glutIdleFunc(idle);
+	glutKeyboardFunc(keyboard);
+	glutIdleFunc(idle);
 }
 
 /**
@@ -23,21 +23,21 @@ void set_callbacks()
  */
 int main(int argc, char* argv[])
 {
-    int window;
-	
-    glutInit(&argc, argv);
+	int window;
 
-    glutInitWindowSize(640, 480);     
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+	glutInit(&argc, argv);
 
-    window = glutCreateWindow("Simplified Pong Game");
-    glutSetWindow(window);
+	glutInitWindowSize(640, 480);     
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
-    init_opengl();
-    set_callbacks();
+	window = glutCreateWindow("Simplified Pong Game");
+	glutSetWindow(window);
 
-    glutMainLoop();
+	init_opengl();
+	set_callbacks();
 
-    return 0;
+	glutMainLoop();
+
+	return 0;
 }
 

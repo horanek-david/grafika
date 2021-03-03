@@ -73,13 +73,11 @@ void multiply_matrices(float result[3][3], const float matrix_a[3][3], const flo
 	int i;
 	int j;
 	int k;
-
 	float sum;
 
 	for (i = 0; i < 3; ++i) {
 		for (j = 0; j < 3; ++j) {
 			sum = 0.0;
-
 			for (k = 0; k < 3; ++k) {
 				sum += matrix_a[i][k] * matrix_b[k][j];
 			}
@@ -93,11 +91,10 @@ void transform_point(float result[3], const float matrix[3][3], const float p[3]
 {
 	int i;
 	int j;
-
 	float sum;
 
 	for ( i = 0; i < 3; ++i) {
-		sum = 0;
+		sum = 0.0;
 		for ( j = 0; j < 3; ++j) {
 			sum += matrix[i][j] * p[j];
 		}
@@ -120,7 +117,7 @@ void init_point(float result[3], const float x, const float y)
 {
 	result[0] = x;
 	result[1] = y;
-	result[2] = 1;
+	result[2] = 1.0;
 }
 
 void init_shift_matrix(float matrix[3][3], const float p[3])

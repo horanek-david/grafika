@@ -6,8 +6,8 @@
  */
 typedef struct Pad
 {
-    float position;
-    float size;
+	float position;
+	float size;
 } Pad;
 
 /**

@@ -9,13 +9,13 @@
  */
 typedef struct Game
 {
-    Ball ball;
-    Pad left_pad;
-    Pad right_pad;
-    int width;
-    int height;
-	int left_pad_counter; /* I*/
-	int right_pad_counter; /* I*/
+	Ball ball;
+	Pad left_pad;
+	Pad right_pad;
+	int width;
+	int height;
+	int left_pad_counter; 
+	int right_pad_counter; 
 } Game;
 
 /**
