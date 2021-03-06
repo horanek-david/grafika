@@ -45,6 +45,11 @@ void set_camera_speed(Camera* camera, double speed);
 void set_camera_side_speed(Camera* camera, double speed);
 
 /**
+ * Set the speed of up and down steps.
+ */
+void set_camera_vertical_speed(Camera* camera, double speed);
+
+/**
  * Set the horizontal rotation speed of the camera.
  */
 void set_camera_horizontal_rotation_speed(Camera* camera, double speed);

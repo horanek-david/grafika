@@ -7,6 +7,7 @@ typedef struct Scene
 {
     // NOTE: Place for model structures and texture ids.
 	float teapot_rotation;
+	float sphere_rotation;
 } Scene;
 
 /**
@@ -28,6 +29,16 @@ void draw_scene(const Scene* scene);
  * Draw the origin of the world coordinate system.
  */
 void draw_origin();
+
+/**
+ * Draw a triangle.
+ */
+void draw_triangle();
+
+/**
+ * Draw a sphere.
+ */
+void draw_sphere();
 
 /**
  * Draw a cylinder in the coordinate system.

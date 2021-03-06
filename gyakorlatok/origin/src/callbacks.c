@@ -66,6 +66,12 @@ void keyboard(unsigned char key, int x, int y)
     case 'd':
         set_camera_side_speed(&camera, -speed);
         break;
+	case 'q':
+        set_camera_vertical_speed(&camera, speed);
+        break;
+    case 'e':
+        set_camera_vertical_speed(&camera, -speed);
+        break;
 	case 'j':
         set_camera_horizontal_rotation_speed(&camera, rotation_speed);
         break;
@@ -89,6 +95,10 @@ void keyboard_up(unsigned char key, int x, int y)
     case 'a':
     case 'd':
         set_camera_side_speed(&camera, 0.0);
+        break;
+	case 'q':
+    case 'e':
+        set_camera_vertical_speed(&camera, 0.0);
         break;
 	case 'j':
     case 'l':
