@@ -29,6 +29,11 @@ void reshape(GLsizei width, GLsizei height);
 /**
  * Call after mouse event.
  */
+void passive_motion(int x, int y);
+
+/**
+ * Call a mouse event.
+ */
 void motion(int x, int y);
 
 /**

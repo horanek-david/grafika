@@ -10,12 +10,13 @@
  */
 void set_callbacks()
 {
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutPassiveMotionFunc(motion);
-    glutKeyboardFunc(keyboard);
-    glutKeyboardUpFunc(keyboard_up);
-    glutIdleFunc(idle);
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutPassiveMotionFunc(passive_motion);
+	glutMotionFunc(motion);
+	glutKeyboardFunc(keyboard);
+	glutKeyboardUpFunc(keyboard_up);
+	glutIdleFunc(idle);
 }
 
 /**
@@ -23,21 +24,21 @@ void set_callbacks()
  */
 int main(int argc, char* argv[])
 {
-    glutInit(&argc, argv);
+	glutInit(&argc, argv);
 
-    glutInitWindowSize(640, 480);     
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+	glutInitWindowSize(640, 480);     
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
-    int window = glutCreateWindow("Scene with a camera");
-    glutSetWindow(window);
+	int window = glutCreateWindow("Scene with a camera");
+	glutSetWindow(window);
 
-    init_opengl();
-    set_callbacks();
+	init_opengl();
+	set_callbacks();
 
-    init_scene(&scene);
-    init_camera(&camera);
+	init_scene(&scene);
+	init_camera(&camera);
 
-    glutMainLoop();
+	glutMainLoop();
 
-    return 0;
+	return 0;
 }
