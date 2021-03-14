@@ -1,2 +1,6 @@
 
 *.exe
+gyakorlatok/.vscode/c_cpp_properties.json
+gyakorlatok/.vscode/settings.json
+gyakorlatok/house/.vscode/c_cpp_properties.json
+gyakorlatok/house/.vscode/settings.json
