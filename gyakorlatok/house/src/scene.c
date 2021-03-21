@@ -30,17 +30,17 @@ void update_scene(Scene* scene, double time)
 	scene->position.z += scene->position_speed.z * time;
 }
 
-void set_material_speed(Scene* scene, float speed)
+void set_speed(Scene* scene, float speed)
 {
 	scene->position_speed.x = speed;
 }
 
-void set_material_side_speed(Scene* scene, float speed)
+void set_side_speed(Scene* scene, float speed)
 {
 	scene->position_speed.y = speed;
 }
 
-void set_material_lift_speed(Scene* scene, float speed)
+void set_lift_speed(Scene* scene, float speed)
 {
 	scene->position_speed.z = speed;
 }
@@ -64,13 +64,13 @@ void draw_scene(const Scene* scene)
 		}
 	}
 
-	glPushMatrix();
-	glTranslatef(-3.0, 0.0, 0.0);
-	glColor3f(0.5, 0.1, 0.9);
-	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
-	draw_model(&(scene->kocka_model));
-	glPopMatrix();
+	draw_kocka(scene);
+	draw_house(scene);
 
+}
+
+void draw_house(const Scene* scene)
+{
 	glPushMatrix();
 	glScalef(0.03, 0.03, 0.03);
 	glTranslatef(0.0, -150.0, -10.0);
@@ -79,8 +79,16 @@ void draw_scene(const Scene* scene)
 	glColor3f(0.5, 0.5, 0.5);
 	draw_model(&(scene->house_model));
 	glPopMatrix();
+}
 
-
+void draw_kocka(const Scene* scene)
+{
+	glPushMatrix();
+	glTranslatef(-3.0, 0.0, 0.0);
+	glColor3f(0.5, 0.1, 0.9);
+	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
+	draw_model(&(scene->kocka_model));
+	glPopMatrix();
 }
 
 void draw_origin()

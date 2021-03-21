@@ -32,15 +32,34 @@ void update_scene(Scene* scene, double time);
 void draw_scene(const Scene* scene);
 
 /**
+ * Draw a house.
+ */
+void draw_house(const Scene* scene);
+
+/**
+ * Draw a cube.
+ */
+void draw_kocka(const Scene* scene);
+
+/**
  * Draw the origin of the world coordinate system.
  */
 void draw_origin();
 
-void set_material_speed(Scene* scene, float speed);
+/**
+ * Set the speed.
+ */
+void set_speed(Scene* scene, float speed);
 
-void set_material_side_speed(Scene* scene, float speed);
+/**
+ * Set the side speed.
+ */
+void set_side_speed(Scene* scene, float speed);
 
-void set_material_lift_speed(Scene* scene, float speed);
+/**
+ * Set the lift speed.
+ */
+void set_lift_speed(Scene* scene, float speed);
 
 
 #endif /* SCENE_H */

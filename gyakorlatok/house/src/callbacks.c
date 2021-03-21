@@ -99,22 +99,22 @@ void keyboard(unsigned char key, int x, int y)
 			set_camera_vertical_rotation_speed(&camera, -rotation_speed);
 			break;
 		case '8':
-			set_material_speed(&scene, speed);
+			set_speed(&scene, speed);
 			break;
 		case '5':
-			set_material_speed(&scene, -speed);
+			set_speed(&scene, -speed);
 			break;
 		case '4':
-			set_material_side_speed(&scene, speed);
+			set_side_speed(&scene, speed);
 			break;
 		case '6':
-			set_material_side_speed(&scene, -speed);
+			set_side_speed(&scene, -speed);
 			break;
 		case '7':
-			set_material_lift_speed(&scene, speed);
+			set_lift_speed(&scene, speed);
 			break;
 		case '9':
-			set_material_lift_speed(&scene, -speed);
+			set_lift_speed(&scene, -speed);
 			break;
 	}
 
@@ -148,15 +148,15 @@ void keyboard_up(unsigned char key, int x, int y)
 			break;
 		case '8':
 		case '5':
-			set_material_speed(&scene, 0.0);
+			set_speed(&scene, 0.0);
 			break;
 		case '4':
 		case '6':
-			set_material_side_speed(&scene, 0.0);
+			set_side_speed(&scene, 0.0);
 			break;
 		case '7':
 		case '9':
-			set_material_lift_speed(&scene, 0.0);
+			set_lift_speed(&scene, 0.0);
 			break;
 	}
 
