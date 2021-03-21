@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Users/horan/Grafika/grafika_sdk/MinGW/include/**",
+                "C:/Users/horan/Grafika/grafika_sdk/MinGW/lib/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:\\Users\\horan\\Grafika\\grafika_sdk\\MinGW\\bin\\gcc.exe",
+            "intelliSenseMode": "gcc-x64",
+            "browse":{
+                "path":[
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
+}
