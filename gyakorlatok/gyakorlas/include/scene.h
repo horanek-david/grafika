@@ -9,8 +9,14 @@
 typedef struct Scene
 {
     Model cube;
+    Model table;
+    Model chair;
+    Model floor;
     Material material;
     GLuint texture_id;
+    GLuint texture_table_id;
+    GLuint texture_chair_id;
+    GLuint texture_floor_id;
 } Scene;
 
 /**
@@ -29,9 +35,25 @@ void set_lighting();
 void set_material(const Material* material);
 
 /**
+ * Draw a table.
+ */
+void draw_table(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw a chair.
+ */
+void draw_chair(const Scene* scene, float x, float y, float z, float degree);
+
+/**
+ * Draw a floor.
+ */
+void draw_floor(const Scene* scene);
+
+/**
  * Draw the scene objects.
  */
 void draw_scene(const Scene* scene);
+
 
 /**
  * Draw the origin of the world coordinate system.
