@@ -15,9 +15,13 @@ void init_scene(Scene* scene)
     load_model(&(scene->chair), "models/chair.obj");
     scene->texture_chair_id = load_texture("textures/chair_01_Base_Color.png"); 
 
-    //CHAIR
+    //FLOOR
     load_model(&(scene->floor), "models/floor.obj");
     scene->texture_floor_id = load_texture("textures/Material _25_Base_Color.png");
+
+    //HOUSE
+    load_model(&(scene->house), "models/house.obj");
+    scene->texture_house_id = load_texture("textures/Diffuse.png");
 
 
     scene->material.ambient.red = 1.0;
@@ -80,6 +84,7 @@ void draw_table(const Scene* scene, float x, float y, float z)
     glPushMatrix();
 
     glScalef(2.0, 2.0, 2.0);
+    glTranslatef(x, y, z);
     glBindTexture(GL_TEXTURE_2D, scene->texture_table_id);
     draw_model(&(scene->table));
 
@@ -118,6 +123,17 @@ void draw_floor(const Scene* scene)
     glPopMatrix();
 }
 
+void draw_house(const Scene* scene)
+{
+    glPushMatrix();
+
+    glScalef(2.0, 2.0, 2.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_house_id);
+    draw_model(&(scene->house));
+
+    glPopMatrix();
+}
+
 void draw_scene(const Scene* scene)
 {
     
@@ -129,20 +145,25 @@ void draw_scene(const Scene* scene)
     /*
         1 table
     */
-    draw_table(scene, 0.0, 0.0, 0.0);
+    draw_table(scene, 0.0, 0.0, 0.2);
 
     /*
         4 chair
     */
-    draw_chair(scene, -0.6, 0.0, 0.0, 0.0);
-    draw_chair(scene, -0.6, 0.0, 0.0, 90.0);
-    draw_chair(scene, -0.6, 0.0, 0.0, -90.0);
-    draw_chair(scene, -0.6, 0.0, 0.0, 180.0);
+    draw_chair(scene, -0.6, 0.0, 0.4, 0.0);
+    draw_chair(scene, -0.6, 0.0, 0.4, 90.0);
+    draw_chair(scene, -0.6, 0.0, 0.4, -90.0);
+    draw_chair(scene, -0.6, 0.0, 0.4, 180.0);
 
     /*
         1 floor
     */
     //draw_floor(scene);
+
+    /*
+        1 house
+    */
+    draw_house(scene);
 
 
 }
