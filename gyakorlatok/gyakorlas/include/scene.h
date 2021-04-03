@@ -13,12 +13,15 @@ typedef struct Scene
     Model chair;
     Model floor;
     Model house;
+    Model house2;
     Material material;
     GLuint texture_id;
     GLuint texture_table_id;
     GLuint texture_chair_id;
     GLuint texture_floor_id;
     GLuint texture_house_id;
+    GLuint texture_house2_id;
+    GLuint texture_grass_id;
 } Scene;
 
 /**
@@ -55,6 +58,17 @@ void draw_floor(const Scene* scene);
  * Draw a house.
  */
 void draw_house(const Scene* scene);
+
+/**
+ * Draw the city.
+ */
+void draw_house2(const Scene* scene);
+
+
+/**
+ * Draw a block of grass.
+ */
+void draw_grass(const Scene* scene, float x, float y, float z);
 
 /**
  * Draw the scene objects.
