@@ -123,21 +123,35 @@ void init_car(Scene* scene)
 
 void update_scene(Scene* scene, double time)
 {
-    float x, i, a, r;
+    float x, n, i, j, r;
+    float alpha, beta, a, b, c;
     r = 0.8;    /* kerék átmérője */
     x = scene->car.position.x;
+    n = x + (scene->car.speed.x * time);
 
-    scene->car.position.x += scene->car.speed.x * time;
-    scene->car.position.y += scene->car.speed.y * time;
-    scene->car.position.z += scene->car.speed.z * time;
+
 
     /* Kerék forgása ha magy az autó előre hátra */
-    i = (scene->car.position.x - x);
-    a = (i * 180) / (r * 3.14);
-    scene->car.rotate += a;
+    i = n - x;
+    j = (i * 180) / (r * 3.14);
+    scene->car.rotate += j;
 
     /* Autó elfordulása fok*/
-    scene->car.rotatea += scene->car.speedz * time * 5;
+    beta = scene->car.rotatea;
+    beta += scene->car.speedz * time * 5;
+
+    //beta = scene->car.rotatea;
+    alpha = 90 - beta;
+    c = scene->car.speed.x * time;
+    a = sin(degree_to_radian(alpha)) * c;
+    b = cos(degree_to_radian(alpha)) * c;
+
+    scene->car.position.x += a;
+    scene->car.position.y += b;
+
+    if(scene->car.speed.x != 0)
+        scene->car.rotatea = beta;
+
 
     /* Kerék elfordulása max 30 fok engedve*/
     scene->car.rotatez += scene->car.speedz * time * 30;
@@ -147,6 +161,7 @@ void update_scene(Scene* scene, double time)
 
     if(scene->car.rotatez < -30)
         scene->car.rotatez = -30;
+
 
     /* Autó forgási középpont */
     scene->car.rotcen = tan(scene->car.rotatez) * 2.36;
@@ -162,7 +177,6 @@ void update_scene(Scene* scene, double time)
         scene->car.material_car_lamp.ambient.green = 0.0f;
         scene->car.material_car_lamp.ambient.blue = 0.0f;
     }
-
 
 }
 
@@ -222,19 +236,20 @@ void set_car_side_speed(Scene* scene, float y)
 void draw_car(const Scene* scene){
     
     float x, y, z;
+    
+
     x = scene->car.position.x;
     y = scene->car.position.y;
     z = scene->car.position.z + 0.65;
 
+    
     glPushMatrix();
     
     /* Pozició */
-
+    glTranslatef(x-2, y, z);
     /* Autó elfordulás */
-    glTranslatef(x, y, z);
     glRotatef(scene->car.rotatea, 0.0, 0.0, 1.0);
     
-
 
     /* Üveg */
     glPushMatrix();
