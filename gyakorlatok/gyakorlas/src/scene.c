@@ -42,6 +42,9 @@ void init_scene(Scene* scene)
     //GRASS
     scene->texture_grass_id = load_texture("textures/grass.jpg");
 
+    //ROAD
+    scene->texture_road_id = load_texture("textures/road.jpg");
+
 
 
     scene->material.ambient.red = 1.0;
@@ -211,16 +214,26 @@ void draw_house2(const Scene* scene,  float x, float y, float z)
     draw_fence(scene);
 
     glPopMatrix();
+}
 
+void draw_house3(const Scene* scene, float x, float y, float z)
+{
 
-    /*
     glPushMatrix();
+    glTranslatef(x, y, z);
+
+    //FRONT NEIGHBOUR
+    glPushMatrix();
+
     glRotatef(-90.0, 0.0, 0.0, 1.0);
-    glTranslatef(-20.0, 0.0, 0.0);
     glBindTexture(GL_TEXTURE_2D, scene->texture_house3_id);
     draw_model(&(scene->house3));
+
     glPopMatrix();
-    */
+
+    draw_fence2(scene);
+    
+    glPopMatrix();
 }
 
 void draw_grass(const Scene* scene, float x, float y, float z)
@@ -262,6 +275,86 @@ void draw_grass(const Scene* scene, float x, float y, float z)
 
     glPopMatrix();
 
+}
+
+void draw_road(const Scene* scene, float x, float y, float z)
+{
+    int i;
+    int j;
+
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, scene->texture_road_id);
+    glScalef(5.0, 5.0, 5.0);
+
+
+    for(i=0; i<10; i++)
+    {
+        for(j=0; j<2; j++)
+        {
+            glPushMatrix();
+
+            glTranslatef(x-i, y-j, z);
+            glBegin(GL_QUADS);
+
+            glTexCoord2f(0, 0);
+            glVertex3f(0, 0, 0);
+
+            glTexCoord2f(0, 1);
+            glVertex3f(0, 1, 0);
+
+            glTexCoord2f(1, 1);
+            glVertex3f(1, 1, 0);
+
+            glTexCoord2f(1, 0);
+            glVertex3f(1, 0, 0);
+
+            glEnd();
+
+            glPopMatrix();
+        }
+    }
+
+    glPopMatrix();
+}
+
+void draw_road2(const Scene* scene, float x, float y, float z)
+{
+    int i;
+    int j;
+
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, scene->texture_road_id);
+    glScalef(5.0, 5.0, 5.0);
+
+
+    for(i=0; i<2; i++)
+    {
+        for(j=0; j<14; j++)
+        {
+            glPushMatrix();
+
+            glTranslatef(x-i, y-j, z);
+            glBegin(GL_QUADS);
+
+            glTexCoord2f(0, 0);
+            glVertex3f(0, 0, 0);
+
+            glTexCoord2f(0, 1);
+            glVertex3f(0, 1, 0);
+
+            glTexCoord2f(1, 1);
+            glVertex3f(1, 1, 0);
+
+            glTexCoord2f(1, 0);
+            glVertex3f(1, 0, 0);
+
+            glEnd();
+
+            glPopMatrix();
+        }
+    }
+
+    glPopMatrix();
 }
 
 void draw_fence(const Scene* scene)
@@ -321,6 +414,122 @@ void draw_fence(const Scene* scene)
     glPopMatrix();
 }
 
+void draw_fence2(const Scene* scene)
+{
+    int i;
+    
+    //FRONT1
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_fence_id);
+    glTranslatef(5.0, 5.0, 0.0);
+    draw_model(&(scene->fence));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, 4.0, 0.0);
+        draw_model(&(scene->fence));
+    }
+    
+    glPopMatrix();
+
+    //FRONT2
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_fence_id);
+    glTranslatef(5.0, -5.0, 0.0);
+    draw_model(&(scene->fence));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, -4.0, 0.0);
+        draw_model(&(scene->fence));
+    }
+    
+    glPopMatrix();
+
+    //BACK1
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_fence_id);
+    glTranslatef(-15.0, 5.0, 0.0);
+    draw_model(&(scene->fence));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, 4.0, 0.0);
+        draw_model(&(scene->fence));
+    }
+    
+    glPopMatrix();
+
+    //BACK2
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_fence_id);
+    glTranslatef(-15.0, -5.0, 0.0);
+    draw_model(&(scene->fence));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, -4.0, 0.0);
+        draw_model(&(scene->fence));
+    }
+    
+    glPopMatrix();
+
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_fence_id);
+    glTranslatef(-15.0, 0.0, 0.0);
+    draw_model(&(scene->fence));
+
+    glPopMatrix();
+
+    //SIDE1
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_fence_id);
+    glTranslatef(-23.5, -2.5, 0.0);
+    draw_model(&(scene->fence));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, 3.8, 0.0);
+        draw_model(&(scene->fence));
+    }
+    glPopMatrix();
+
+    //SIDE2
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_fence_id);
+    glTranslatef(23.5, -2.5, 0.0);
+    draw_model(&(scene->fence));
+    
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, 3.8, 0.0);
+        draw_model(&(scene->fence));
+    }
+    glPopMatrix();
+
+    
+
+}
+
 void draw_city(const Scene* scene, float x, float y, float z)
 {
     //MAIN HOUSE
@@ -330,8 +539,21 @@ void draw_city(const Scene* scene, float x, float y, float z)
     draw_house2(scene, -15.0, -1.0, 0.0);
     draw_house2(scene, 15.0, -1.0, 0.0);
 
+    //FRONT NEIGHBOUR
+    draw_house3(scene, 0.0, 20.0, 0.0);
+
     //GRASS
     draw_grass(scene, 4.0, 0.0, 0.0);
+    draw_grass(scene, 4.0, 6.0, 0.0);
+
+    //ROAD
+    draw_road(scene, 4.0, 2.0, 0.0);
+    draw_road(scene, 4.0, 8.0, 0.0);
+    draw_road(scene, 4.0, -4.0, 0.0);
+
+    //ROAD2
+    draw_road2(scene, 6.0, 8.0, 0.0);
+    draw_road2(scene, -6.0, 8.0, 0.0);
 
 }
 
@@ -344,7 +566,7 @@ void draw_scene(const Scene* scene)
     draw_origin();
 
     draw_city(scene, 0.0, 0.0, 0.0);
-
+    //draw_fence2(scene);
 
 }
 

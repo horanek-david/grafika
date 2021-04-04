@@ -27,6 +27,7 @@ typedef struct Scene
     GLuint texture_house2_id;
     GLuint texture_house3_id;
     GLuint texture_grass_id;
+    GLuint texture_road_id;
     GLuint texture_fence_id;
 } Scene;
 
@@ -76,14 +77,34 @@ void draw_house(const Scene* scene, float x, float y, float z);
 void draw_house2(const Scene* scene, float x, float y, float z);
 
 /**
+ * Draw a house3.
+ */
+void draw_house3(const Scene* scene, float x, float y, float z);
+
+/**
  * Draw a block of grass.
  */
 void draw_grass(const Scene* scene, float x, float y, float z);
 
 /**
+ * Draw a block of road.
+ */
+void draw_road(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw a block of road.
+ */
+void draw_road2(const Scene* scene, float x, float y, float z);
+
+/**
  * Draw a fence around a house.
  */
 void draw_fence(const Scene* scene);
+
+/**
+ * Draw a fence around the big house.
+ */
+void draw_fence2(const Scene* scene);
 
 /**
  * Draw the city.
