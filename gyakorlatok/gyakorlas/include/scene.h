@@ -11,17 +11,23 @@ typedef struct Scene
     Model cube;
     Model table;
     Model chair;
+    Model rchair;
     Model floor;
     Model house;
     Model house2;
+    Model house3;
+    Model fence;
     Material material;
     GLuint texture_id;
     GLuint texture_table_id;
     GLuint texture_chair_id;
+    GLuint texture_rchair_id;
     GLuint texture_floor_id;
     GLuint texture_house_id;
     GLuint texture_house2_id;
+    GLuint texture_house3_id;
     GLuint texture_grass_id;
+    GLuint texture_fence_id;
 } Scene;
 
 /**
@@ -45,6 +51,11 @@ void set_material(const Material* material);
 void draw_table(const Scene* scene, float x, float y, float z);
 
 /**
+ * Draw a rocking chair.
+ */
+void draw_rockingchair(const Scene* scene, float x, float y, float z, float degree);
+
+/**
  * Draw a chair.
  */
 void draw_chair(const Scene* scene, float x, float y, float z, float degree);
@@ -57,18 +68,27 @@ void draw_floor(const Scene* scene);
 /**
  * Draw a house.
  */
-void draw_house(const Scene* scene);
+void draw_house(const Scene* scene, float x, float y, float z);
 
 /**
- * Draw the city.
+ * Draw a house2.
  */
-void draw_house2(const Scene* scene);
-
+void draw_house2(const Scene* scene, float x, float y, float z);
 
 /**
  * Draw a block of grass.
  */
 void draw_grass(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw a fence around a house.
+ */
+void draw_fence(const Scene* scene);
+
+/**
+ * Draw the city.
+ */
+void draw_city(const Scene* scene, float x, float y, float z);
 
 /**
  * Draw the scene objects.

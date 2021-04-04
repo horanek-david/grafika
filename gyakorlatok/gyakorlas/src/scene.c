@@ -9,11 +9,15 @@ void init_scene(Scene* scene)
 {
     //TABLE
     load_model(&(scene->table), "models/table.obj");
-    scene->texture_table_id = load_texture("textures/chair_01_Base_Color.png");
+    scene->texture_table_id = load_texture("textures/chair_initialShadingGroup_BaseColor.png");
 
     //CHAIR
     load_model(&(scene->chair), "models/chair.obj");
-    scene->texture_chair_id = load_texture("textures/chair_01_Base_Color.png"); 
+    scene->texture_chair_id = load_texture("textures/chair_initialShadingGroup_BaseColor.png"); 
+
+    //CHAIR
+    load_model(&(scene->rchair), "models/rockingchair.obj");
+    scene->texture_rchair_id = load_texture("textures/chair_initialShadingGroup_BaseColor.png");
 
     //FLOOR
     load_model(&(scene->floor), "models/floor.obj");
@@ -26,6 +30,14 @@ void init_scene(Scene* scene)
     //HOUSE2
     load_model(&(scene->house2), "models/house2.obj");
     scene->texture_house2_id = load_texture("textures/Farmhouse Texture.jpg");
+
+    //HOUSE3
+    load_model(&(scene->house3), "models/house3.obj");
+    scene->texture_house3_id = load_texture("textures/Big_Old_House_C.jpg");
+
+    //FENCE
+    load_model(&(scene->fence), "models/fence.obj");
+    scene->texture_fence_id = load_texture("textures/Map.png");
 
     //GRASS
     scene->texture_grass_id = load_texture("textures/grass.jpg");
@@ -97,6 +109,20 @@ void draw_table(const Scene* scene, float x, float y, float z)
     draw_model(&(scene->table));
 
     glPopMatrix();
+
+}
+
+void draw_rockingchair(const Scene* scene, float x, float y, float z, float degree)
+{
+    glPushMatrix();
+
+    glScalef(0.05, 0.05, 0.05);
+    glRotatef(degree, 0.0, 0.0, 1.0);
+    glTranslatef(x, y, z);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_rchair_id);
+    draw_model(&(scene->rchair));
+
+    glPopMatrix();
 }
 
 void draw_chair(const Scene* scene, float x, float y, float z, float degree)
@@ -131,43 +157,70 @@ void draw_floor(const Scene* scene)
     glPopMatrix();
 }
 
-void draw_house(const Scene* scene)
+void draw_house(const Scene* scene, float x, float y, float z)
 {
+    
     glPushMatrix();
+    glTranslatef(x, y, z);
 
+    //MAIN HOUSE
+    glPushMatrix();
     glScalef(2.0, 2.0, 2.0);
     glBindTexture(GL_TEXTURE_2D, scene->texture_house_id);
     draw_model(&(scene->house));
-
-    /*
-    glDisable(GL_TEXTURE_2D);
-    glDisable(GL_LIGHTING);
-    glEnable(GL_TEXTURE_2D);
-    glEnable(GL_LIGHTING);
-    */
-
     glPopMatrix();
+
+    //FENCES
+    draw_fence(scene);
+
+    // TABLE
+    draw_table(scene, 0.0, 0.0, 0.2);
+
+    //ROCKINGCHAIR
+    draw_rockingchair(scene, 0.0, 75.0, 18.0, -135);
+
+    // CHAIRS
+    draw_chair(scene, -0.6, 0.0, 0.4, 0.0);
+    draw_chair(scene, -0.6, 0.0, 0.4, 90.0);
+    draw_chair(scene, -0.6, 0.0, 0.4, -90.0);
+    draw_chair(scene, -0.6, 0.0, 0.4, 180.0);
+    
+    glPopMatrix();
+
 }
 
-void draw_house2(const Scene* scene)
+void draw_house2(const Scene* scene,  float x, float y, float z)
 {
+    int i;
+
+    glPushMatrix();
+    glTranslatef(x, y, z);
+
+    //NEIGHBOUR HOUSE
     glPushMatrix();
 
-    glScalef(25.0, 25.0, 25.0);
     glRotatef(-90.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.1, -0.4, 0.0);
-    glBindTexture(GL_TEXTURE_2D, scene->texture_house2_id);
-    draw_model(&(scene->house2));
-
-    glTranslatef(0.0, -0.4, 0.0);
-    glBindTexture(GL_TEXTURE_2D, scene->texture_house2_id);
-    draw_model(&(scene->house2));
-
-    glTranslatef(0.0, 1.2, 0.0);
+    glScalef(25.0, 25.0, 25.0);
+    glTranslatef(0.1, -0.08, 0.0);
     glBindTexture(GL_TEXTURE_2D, scene->texture_house2_id);
     draw_model(&(scene->house2));
 
     glPopMatrix();
+
+    //FENCES
+    draw_fence(scene);
+
+    glPopMatrix();
+
+
+    /*
+    glPushMatrix();
+    glRotatef(-90.0, 0.0, 0.0, 1.0);
+    glTranslatef(-20.0, 0.0, 0.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_house3_id);
+    draw_model(&(scene->house3));
+    glPopMatrix();
+    */
 }
 
 void draw_grass(const Scene* scene, float x, float y, float z)
@@ -180,9 +233,9 @@ void draw_grass(const Scene* scene, float x, float y, float z)
     glScalef(5.0, 5.0, 5.0);
 
 
-    for(i=0; i<8; i++)
+    for(i=0; i<10; i++)
     {
-        for(j=0; j<3; j++)
+        for(j=0; j<4; j++)
         {
             glPushMatrix();
 
@@ -211,6 +264,77 @@ void draw_grass(const Scene* scene, float x, float y, float z)
 
 }
 
+void draw_fence(const Scene* scene)
+{
+    int i;
+
+    //LEFT SIDE FENCES
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->texture_fence_id);
+    glTranslatef(4.0, 2.5, 0.0);
+    draw_model(&(scene->fence));
+
+    for(i=0; i<3; i++)
+    {
+        glTranslatef(0.0, -4.0, 0.0);
+        draw_model(&(scene->fence));
+    }
+    glPopMatrix();
+
+    //FRONT FENCES
+    glPushMatrix();
+    glRotatef(90.0, 0.0, 0.0, 1.0);
+    glScalef(1.0, 1.0, 1.0);
+    glTranslatef(5.0, -1.5, 0.0);
+    draw_model(&(scene->fence));
+
+    glTranslatef(0.0, 6.5, 0.0);
+    draw_model(&(scene->fence));
+    glPopMatrix();
+
+    //RIGHT SIDE FENCES
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    glTranslatef(-7.5, 2.5, 0.0);
+    draw_model(&(scene->fence));
+    
+    for(i=0; i<3; i++)
+    {
+        glTranslatef(0.0, -4.0, 0.0);
+        draw_model(&(scene->fence));
+    }
+    glPopMatrix();
+
+    //BACK FENCES
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(90.0, 0.0, 0.0, 1.0);
+    glTranslatef(-12.0, -1.5, 0.0);
+    draw_model(&(scene->fence));
+    glTranslatef(0.0, 6.5, 0.0);
+    draw_model(&(scene->fence));
+    glTranslatef(0.0, -2.15, 0.0);
+    draw_model(&(scene->fence));
+
+
+    glPopMatrix();
+}
+
+void draw_city(const Scene* scene, float x, float y, float z)
+{
+    //MAIN HOUSE
+    draw_house(scene, 0.0, -1.0, 0.0);
+
+    //NEIGHBOURS
+    draw_house2(scene, -15.0, -1.0, 0.0);
+    draw_house2(scene, 15.0, -1.0, 0.0);
+
+    //GRASS
+    draw_grass(scene, 4.0, 0.0, 0.0);
+
+}
+
 void draw_scene(const Scene* scene)
 {
     
@@ -219,38 +343,7 @@ void draw_scene(const Scene* scene)
 
     draw_origin();
 
-    /*
-        1 table
-    */
-    draw_table(scene, 0.0, 0.0, 0.2);
-
-    /*
-        4 chair
-    */
-    draw_chair(scene, -0.6, 0.0, 0.4, 0.0);
-    draw_chair(scene, -0.6, 0.0, 0.4, 90.0);
-    draw_chair(scene, -0.6, 0.0, 0.4, -90.0);
-    draw_chair(scene, -0.6, 0.0, 0.4, 180.0);
-
-    /*
-        1 floor
-    */
-    //draw_floor(scene);
-
-    /*
-        1 house
-    */
-    draw_house(scene);
-
-    /*
-        2 house2
-    */
-    draw_house2(scene);
-
-    /*
-        1 block of grass
-    */
-    draw_grass(scene, 2.0, 0.0, 0.0);
+    draw_city(scene, 0.0, 0.0, 0.0);
 
 
 }
