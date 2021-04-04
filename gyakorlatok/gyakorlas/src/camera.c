@@ -31,6 +31,10 @@ void update_camera(Camera* camera, double time)
     camera->position.y += sin(angle) * camera->speed.y * time * 10;
     camera->position.x += cos(side_angle) * camera->speed.x * time * 10;
     camera->position.y += sin(side_angle) * camera->speed.x * time * 10;
+
+    camera->position.z += camera->speed.z * time * 2;
+    if(camera->position.z < 0.5)
+        camera->position.z = 0.5;
 }
 
 void set_view(const Camera* camera)
@@ -73,6 +77,11 @@ void set_camera_speed(Camera* camera, double speed)
 void set_camera_side_speed(Camera* camera, double speed)
 {
     camera->speed.x = speed;
+}
+
+void set_camera_lift_speed(Camera* camera, double speed)
+{
+    camera->speed.z = speed;
 }
 
 void show_texture_preview()

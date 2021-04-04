@@ -6,8 +6,31 @@
 
 #include <obj/model.h>
 
+typedef struct Car
+{
+    Model body;
+    Model tire_front;
+    Model tire_back;
+    Model glass;
+    Model lamp;
+    Material material_car_body;
+    Material material_car_glass;
+    Material material_car_lamp;
+    GLuint texture_body_id;
+    GLuint texture_tire_id;
+    vec3 position;
+    vec3 speed;
+    int is_light_on;
+    float rotate;
+    float rotatez;
+    float rotatea;
+    float speedz;
+    float rotcen;
+} Car;
+
 typedef struct Scene
 {
+    Car car;
     Model cube;
     Model table;
     Model chair;
@@ -110,6 +133,47 @@ void draw_fence2(const Scene* scene);
  * Draw the city.
  */
 void draw_city(const Scene* scene, float x, float y, float z);
+
+
+
+
+/**
+ * Initialize the car by loading models.
+ */
+void init_car(Scene* scene);
+
+/**
+ * Update scene
+ */
+void update_scene(Scene* scene, double time);
+
+/**
+ * Set the lighting of the left car lamp.
+ */
+void set_car_lamp_l(float x, float y, float z);
+
+/**
+ * Set the lighting of the right car lamp.
+ */
+void set_car_lamp_r(float x, float y, float z);
+
+/**
+ * Set car speed
+ */
+void set_car_speed(Scene* scene, float x);
+
+/**
+ * Set car side speed
+ */
+void set_car_side_speed(Scene* scene, float y);
+
+/**
+ * Draw the car objects.
+ */
+void draw_car(const Scene* scene);
+
+
+
 
 /**
  * Draw the scene objects.

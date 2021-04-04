@@ -79,12 +79,26 @@ void keyboard(unsigned char key, int x, int y)
     case 'd':
         set_camera_side_speed(&camera, -1);
         break;
+    case 'q':
+        set_camera_lift_speed(&camera, 2);
+        break;
+    case 'e':
+        set_camera_lift_speed(&camera, -2);
+        break;
     case 't':
         if (is_preview_visible) {
             is_preview_visible = FALSE;
         }
         else {
             is_preview_visible = TRUE;
+        }
+        break;
+    case ' ':
+        if ((&scene)->car.is_light_on) {
+            (&scene)->car.is_light_on = FALSE;
+        }
+        else {
+            (&scene)->car.is_light_on = TRUE;
         }
         break;
     }
@@ -103,6 +117,46 @@ void keyboard_up(unsigned char key, int x, int y)
     case 'd':
         set_camera_side_speed(&camera, 0.0);
         break;
+    case 'q':
+    case 'e':
+        set_camera_lift_speed(&camera, 0.0);
+        break;
+    }
+
+    glutPostRedisplay();
+}
+
+void specialkey(int key, int x, int y)
+{
+    switch (key) {
+    case GLUT_KEY_DOWN:
+        set_car_speed(&scene, 1);
+        break;
+    case GLUT_KEY_UP:
+        set_car_speed(&scene, -1);
+        break;
+    case GLUT_KEY_LEFT:
+        set_car_side_speed(&scene, 1);
+        break;
+    case GLUT_KEY_RIGHT:
+        set_car_side_speed(&scene, -1);
+        break;
+    }
+
+    glutPostRedisplay();
+}
+
+void specialkey_up(int key, int x, int y)
+{
+    switch (key) {
+    case GLUT_KEY_DOWN:
+    case GLUT_KEY_UP:
+        set_car_speed(&scene, 0.0);
+        break;
+    case GLUT_KEY_LEFT:
+    case GLUT_KEY_RIGHT:
+        set_car_side_speed(&scene, 0.0);
+        break;
     }
 
     glutPostRedisplay();
@@ -119,6 +173,7 @@ void idle()
     last_frame_time = current_time;
 
     update_camera(&camera, elapsed_time);
+    update_scene(&scene, elapsed_time * 5);
 
     glutPostRedisplay();
 }
