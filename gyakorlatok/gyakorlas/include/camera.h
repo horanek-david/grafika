@@ -34,6 +34,11 @@ void update_camera(Camera* camera, double time);
 void set_view(const Camera* camera);
 
 /**
+ * 
+ */
+void set_default_view(Camera* camera);
+
+/**
  * Set the horizontal and vertical rotation of the view angle.
  */
 void rotate_camera(Camera* camera, double horizontal, double vertical);

@@ -6,6 +6,8 @@
 
 #include <obj/model.h>
 
+typedef enum Carview {NORMALW, OUTSIDEW, INSIDEW} Carview;
+
 typedef struct Car
 {
     Model body;
@@ -21,11 +23,11 @@ typedef struct Car
     vec3 position;
     vec3 speed;
     int is_light_on;
-    float rotate;
-    float rotatez;
-    float rotatea;
-    float speedz;
-    float rotcen;
+    Carview carview;
+    float rotate_tire;  
+    float around_tire;  
+    float rotate_car; 
+    float speedz;     
 } Car;
 
 typedef struct Scene
@@ -40,6 +42,10 @@ typedef struct Scene
     Model house2;
     Model house3;
     Model fence;
+    Model streetlight;
+    Model dresser;
+    Model sofa;
+    Model barrier;
     Material material;
     GLuint texture_id;
     GLuint texture_table_id;
@@ -52,6 +58,10 @@ typedef struct Scene
     GLuint texture_grass_id;
     GLuint texture_road_id;
     GLuint texture_fence_id;
+    GLuint texture_streetlight_id;
+    GLuint texture_dresser_id;
+    GLuint texture_sofa_id;
+    GLuint texture_barrier_id;
 } Scene;
 
 /**
@@ -110,6 +120,16 @@ void draw_house3(const Scene* scene, float x, float y, float z);
 void draw_grass(const Scene* scene, float x, float y, float z);
 
 /**
+ * Draw a grass around the city.
+ */
+void draw_grass2(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw a grass around the city.
+ */
+void draw_grass3(const Scene* scene, float x, float y, float z);
+
+/**
  * Draw a block of road.
  */
 void draw_road(const Scene* scene, float x, float y, float z);
@@ -130,6 +150,26 @@ void draw_fence(const Scene* scene);
 void draw_fence2(const Scene* scene);
 
 /**
+ * Draw 2 street light in front of the big house.
+ */
+void draw_streetlight(const Scene* scene);
+
+/**
+ * Draw a dresser.
+ */
+void draw_dresser(const Scene* scene);
+
+/**
+ * Draw a sofa.
+ */
+void draw_sofa(const Scene* scene);
+
+/**
+ * Draw barrier.
+ */
+void draw_sofa(const Scene* scene);
+
+/**
  * Draw the city.
  */
 void draw_city(const Scene* scene, float x, float y, float z);
@@ -145,7 +185,7 @@ void init_car(Scene* scene);
 /**
  * Update scene
  */
-void update_scene(Scene* scene, double time);
+void update_scene(Scene* scene, Camera* camera, double time);
 
 /**
  * Set the lighting of the left car lamp.

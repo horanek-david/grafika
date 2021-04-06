@@ -85,12 +85,16 @@ void keyboard(unsigned char key, int x, int y)
     case 'e':
         set_camera_lift_speed(&camera, -2);
         break;
-    case 't':
-        if (is_preview_visible) {
-            is_preview_visible = FALSE;
+    case 'v':
+        if ((&scene)->car.carview == NORMALW) {
+            (&scene)->car.carview = OUTSIDEW;
         }
-        else {
-            is_preview_visible = TRUE;
+        else if ((&scene)->car.carview == OUTSIDEW) {
+            (&scene)->car.carview = INSIDEW;
+        }
+        else if ((&scene)->car.carview == INSIDEW) {
+            (&scene)->car.carview = NORMALW;
+            set_default_view(&camera);
         }
         break;
     case ' ':
@@ -173,7 +177,7 @@ void idle()
     last_frame_time = current_time;
 
     update_camera(&camera, elapsed_time);
-    update_scene(&scene, elapsed_time * 5);
+    update_scene(&scene, &camera, elapsed_time * 5);
 
     glutPostRedisplay();
 }
