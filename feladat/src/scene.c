@@ -129,6 +129,26 @@ void init_fence(Railing* fence)
     fence->material.shininess = 0.0;
 }
 
+void init_barrier(Scene* scene)
+{
+    load_model(&(scene->barrier.model), "models/barrier.obj");
+    scene->barrier.texture_id = load_texture("textures/barrier.png"); 
+
+    scene->barrier.material.ambient.red = 1.0;
+    scene->barrier.material.ambient.green = 1.0;
+    scene->barrier.material.ambient.blue = 1.0;
+
+    scene->barrier.material.diffuse.red = 1.0;
+    scene->barrier.material.diffuse.green = 1.0;
+    scene->barrier.material.diffuse.blue = 1.0;
+
+    scene->barrier.material.specular.red = 0.0;
+    scene->barrier.material.specular.green = 0.0;
+    scene->barrier.material.specular.blue = 0.0;
+
+    scene->barrier.material.shininess = 0.0;
+}
+
 void init_scene(Scene* scene)
 {
     init_soil(scene);
@@ -136,6 +156,7 @@ void init_scene(Scene* scene)
     init_mainhouse(scene);
     init_house2(scene);
     init_house3(scene);
+    init_barrier(scene);
 }
 
 void set_lighting()
@@ -613,6 +634,75 @@ void draw_fence2(const Railing* fence)
 
 }
 
+void draw_barrier(const Scene* scene)
+{   
+    int i;
+    float change = 1.0/0.04;
+
+    /*LEFT SIDE*/
+    glPushMatrix();
+
+    glScalef(0.04, 0.04, 0.04);
+    glRotatef(90.0, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->barrier.texture_id);
+    glTranslatef(45.0 * change, 35.0 * change, 0.0 *change);
+    draw_model(&(scene->barrier.model));
+
+    for(i=0; i<62; i++)
+    {
+        glTranslatef(-1.1 * change, 0.0 * change, 0.0 * change);
+        draw_model(&(scene->barrier.model));
+    }
+    glPopMatrix();
+
+    /*RIGHT SIDE*/
+    glPushMatrix();
+
+    glScalef(0.04, 0.04, 0.04);
+    glRotatef(90.0, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->barrier.texture_id);
+    glTranslatef(45.0 * change, -35.0 * change, 0.0 *change);
+    draw_model(&(scene->barrier.model));
+
+    for(i=0; i<62; i++)
+    {
+        glTranslatef(-1.1 * change, 0.0 * change, 0.0 * change);
+        draw_model(&(scene->barrier.model));
+    }
+    glPopMatrix();
+
+    /*BACK*/
+    glPushMatrix();
+
+    glScalef(0.04, 0.04, 0.04);
+    glBindTexture(GL_TEXTURE_2D, scene->barrier.texture_id);
+    glTranslatef(-33.4 * change, -25.45 * change, 0.0 *change);
+    draw_model(&(scene->barrier.model));
+
+    for(i=0; i<62; i++)
+    {
+        glTranslatef(1.1 * change, 0.0 * change, 0.0 * change);
+        draw_model(&(scene->barrier.model));
+    }
+    glPopMatrix();
+
+    /*FRONT*/
+    glPushMatrix();
+
+    glScalef(0.04, 0.04, 0.04);
+    glBindTexture(GL_TEXTURE_2D, scene->barrier.texture_id);
+    glTranslatef(-33.4 * change, 45.0 * change, 0.0 *change);
+    draw_model(&(scene->barrier.model));
+
+    for(i=0; i<62; i++)
+    {
+        glTranslatef(1.1 * change, 0.0 * change, 0.0 * change);
+        draw_model(&(scene->barrier.model));
+    }
+    glPopMatrix();
+
+}
+
 void draw_thecity(const Scene* scene)
 {
     /*GRASS*/
@@ -640,6 +730,9 @@ void draw_thecity(const Scene* scene)
     draw_house2(scene, 15.0, -1.0, 0.0);
 
     draw_house3(scene, 0.0, 20.0, 0.0);     /*The big house in front of the main house.*/
+
+    /*BARRIER*/
+    draw_barrier(scene);
 
 }
 

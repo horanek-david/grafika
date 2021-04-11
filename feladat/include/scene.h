@@ -68,6 +68,11 @@ void init_house3(Scene* scene);
 void init_fence(Railing* fence);
 
 /**
+ * Initialize the barrier around the city by loading models and textures.
+ */
+void init_barrier(Scene* scene);
+
+/**
  * Initialize the scene by loading models.
  */
 void init_scene(Scene* scene);
@@ -131,6 +136,11 @@ void draw_fence(const Railing* fence);
  * Draw a fence around the big house.
  */
 void draw_fence2(const Railing* fence);
+
+/**
+ * Draw a barrier around the city.
+ */
+void draw_barrier(const Scene* scene);
 
 /**
  * Draw the city.
