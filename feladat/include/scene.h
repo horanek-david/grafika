@@ -6,12 +6,27 @@
 
 #include <obj/model.h>
 
-typedef struct Scene
+typedef struct Soil
 {
-    Model cube;
     Material material;
     GLuint texture_id;
+} Soil;
+
+typedef struct Scene
+{
+    Soil soil;
+    Soil road;
 } Scene;
+
+/**
+ * Initialize the soil by loading models.
+ */
+void init_soil(Scene* scene);
+
+/**
+ * Initialize the road by loading models.
+ */
+void init_road(Scene* scene);
 
 /**
  * Initialize the scene by loading models.
@@ -27,6 +42,12 @@ void set_lighting();
  * Set the current material.
  */
 void set_material(const Material* material);
+
+void draw_grass(const Scene* scene, float x, float y, float z);
+
+void draw_grass2(const Scene* scene, float x, float y, float z);
+
+void draw_grass3(const Scene* scene, float x, float y, float z);
 
 /**
  * Draw the scene objects.

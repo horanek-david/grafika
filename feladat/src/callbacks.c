@@ -128,7 +128,7 @@ void idle()
     elapsed_time = (double)(current_time - last_frame_time) / 1000;
     last_frame_time = current_time;
 
-    update_camera(&camera, elapsed_time);
+    update_camera(&camera, elapsed_time * 10);
 
     glutPostRedisplay();
 }

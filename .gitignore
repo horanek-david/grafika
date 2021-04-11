@@ -19,3 +19,5 @@ feladat/.vscode/c_cpp_properties.json
 feladat/.vscode/settings.json
 feladat/cube.obj
 feladat/cube.png
+feladat/textures/grass.jpg
+feladat/textures/road.jpg
