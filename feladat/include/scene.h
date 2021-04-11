@@ -43,11 +43,35 @@ void set_lighting();
  */
 void set_material(const Material* material);
 
+/**
+ * Draw a grass under the houses.
+ */
 void draw_grass(const Scene* scene, float x, float y, float z);
 
+/**
+ * Draw a grass behind the front and back road.
+ */
 void draw_grass2(const Scene* scene, float x, float y, float z);
 
+/**
+ * Draw a grass next to the side roads.
+ */
 void draw_grass3(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw a road on front of the houses and also behind them.
+ */
+void draw_road(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw the side roads.
+ */
+void draw_road2(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw the city.
+ */
+void draw_thecity(const Scene* scene, float x, float y, float z);
 
 /**
  * Draw the scene objects.
