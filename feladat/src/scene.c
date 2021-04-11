@@ -43,10 +43,31 @@ void init_road(Scene* scene)
     scene->road.material.shininess = 0.0;
 }
 
+void init_mainhouse(Scene* scene)
+{
+    load_model(&(scene->house.model), "models/mainhouse.obj");
+    scene->house.texture_id = load_texture("textures/mainhouse.png"); 
+
+    scene->house.material.ambient.red = 1.0;
+    scene->house.material.ambient.green = 1.0;
+    scene->house.material.ambient.blue = 1.0;
+
+    scene->house.material.diffuse.red = 1.0;
+    scene->house.material.diffuse.green = 1.0;
+    scene->house.material.diffuse.blue = 1.0;
+
+    scene->house.material.specular.red = 0.0;
+    scene->house.material.specular.green = 0.0;
+    scene->house.material.specular.blue = 0.0;
+
+    scene->house.material.shininess = 0.0;
+}
+
 void init_scene(Scene* scene)
 {
     init_soil(scene);
     init_road(scene);
+    init_mainhouse(scene);
 }
 
 void set_lighting()
@@ -293,6 +314,22 @@ void draw_road2(const Scene* scene, float x, float y, float z)
     glPopMatrix();
 }
 
+void draw_mainhouse(const Scene* scene, float x, float y, float z)
+{
+    
+    glPushMatrix();
+    glTranslatef(x, y, z);
+
+    //MAIN HOUSE
+    glPushMatrix();
+    glScalef(2.0, 2.0, 2.0);
+    glBindTexture(GL_TEXTURE_2D, scene->house.texture_id);
+    draw_model(&(scene->house));
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
 void draw_thecity(const Scene* scene, float x, float y, float z)
 {
     //GRASS
@@ -312,6 +349,10 @@ void draw_thecity(const Scene* scene, float x, float y, float z)
 
     draw_road2(scene, 6.0, 8.0, 0.0);  //Side roads.
     draw_road2(scene, -6.0, 8.0, 0.0);
+
+    //HOUSES
+    draw_mainhouse(scene, 0.0, -1.0, 0.0);  //The main house of the small houses.
+
 }
 
 void draw_scene(const Scene* scene)

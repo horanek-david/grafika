@@ -12,14 +12,22 @@ typedef struct Soil
     GLuint texture_id;
 } Soil;
 
+typedef struct House
+{
+    Model model;
+    Material material;
+    GLuint texture_id;
+} House;
+
 typedef struct Scene
 {
     Soil soil;
     Soil road;
+    House house;
 } Scene;
 
 /**
- * Initialize the soil by loading models.
+ * Initialize the soil by loading textures.
  */
 void init_soil(Scene* scene);
 
@@ -27,6 +35,11 @@ void init_soil(Scene* scene);
  * Initialize the road by loading models.
  */
 void init_road(Scene* scene);
+
+/**
+ * Initialize the main house by loading models and textures.
+ */
+void init_mainhouse(Scene* scene);
 
 /**
  * Initialize the scene by loading models.
@@ -67,6 +80,11 @@ void draw_road(const Scene* scene, float x, float y, float z);
  * Draw the side roads.
  */
 void draw_road2(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw the main house.
+ */
+void draw_mainhouse(const Scene* scene, float x, float y, float z);
 
 /**
  * Draw the city.
