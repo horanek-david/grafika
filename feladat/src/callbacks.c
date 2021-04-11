@@ -79,7 +79,13 @@ void keyboard(unsigned char key, int x, int y)
     case 'd':
         set_camera_side_speed(&camera, -1);
         break;
-    case 't':
+    case 'q':
+        set_camera_lift_speed(&camera, 1);
+        break;
+    case 'e':
+        set_camera_lift_speed(&camera, -1);
+        break;
+    case 'p':
         if (is_preview_visible) {
             is_preview_visible = FALSE;
         }
@@ -102,6 +108,10 @@ void keyboard_up(unsigned char key, int x, int y)
     case 'a':
     case 'd':
         set_camera_side_speed(&camera, 0.0);
+        break;
+    case 'q':
+    case 'e':
+        set_camera_lift_speed(&camera, 0.0);
         break;
     }
 
