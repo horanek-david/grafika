@@ -63,11 +63,53 @@ void init_mainhouse(Scene* scene)
     scene->house.material.shininess = 0.0;
 }
 
+void init_house2(Scene* scene)
+{
+    load_model(&(scene->house2.model), "models/house2.obj");
+    scene->house2.texture_id = load_texture("textures/house2.jpg"); 
+
+    scene->house2.material.ambient.red = 1.0;
+    scene->house2.material.ambient.green = 1.0;
+    scene->house2.material.ambient.blue = 1.0;
+
+    scene->house2.material.diffuse.red = 1.0;
+    scene->house2.material.diffuse.green = 1.0;
+    scene->house2.material.diffuse.blue = 1.0;
+
+    scene->house2.material.specular.red = 0.0;
+    scene->house2.material.specular.green = 0.0;
+    scene->house2.material.specular.blue = 0.0;
+
+    scene->house2.material.shininess = 0.0;
+}
+
+void init_house3(Scene* scene)
+{
+    load_model(&(scene->house3.model), "models/house3.obj");
+    scene->house3.texture_id = load_texture("textures/house3.jpg"); 
+
+    scene->house3.material.ambient.red = 1.0;
+    scene->house3.material.ambient.green = 1.0;
+    scene->house3.material.ambient.blue = 1.0;
+
+    scene->house3.material.diffuse.red = 1.0;
+    scene->house3.material.diffuse.green = 1.0;
+    scene->house3.material.diffuse.blue = 1.0;
+
+    scene->house3.material.specular.red = 0.0;
+    scene->house3.material.specular.green = 0.0;
+    scene->house3.material.specular.blue = 0.0;
+
+    scene->house3.material.shininess = 0.0;
+}
+
 void init_scene(Scene* scene)
 {
     init_soil(scene);
     init_road(scene);
     init_mainhouse(scene);
+    init_house2(scene);
+    init_house3(scene);
 }
 
 void set_lighting()
@@ -159,6 +201,7 @@ void draw_grass2(const Scene* scene, float x, float y, float z)
 
     //FRONT, BACK GRASS
     glPushMatrix();
+    set_material(&(scene->soil.material));
     glBindTexture(GL_TEXTURE_2D, scene->soil.texture_id);
     glScalef(5.0, 5.0, 5.0);
 
@@ -200,6 +243,7 @@ void draw_grass3(const Scene* scene, float x, float y, float z)
 
     //SIDE GRASS
     glPushMatrix();
+    set_material(&(scene->soil.material));
     glBindTexture(GL_TEXTURE_2D, scene->soil.texture_id);
     glScalef(5.0, 5.0, 5.0);
 
@@ -240,6 +284,7 @@ void draw_road(const Scene* scene, float x, float y, float z)
     int j;
 
     glPushMatrix();
+    set_material(&(scene->road.material));
     glBindTexture(GL_TEXTURE_2D, scene->road.texture_id);
     glScalef(5.0, 5.0, 5.0);
 
@@ -280,6 +325,7 @@ void draw_road2(const Scene* scene, float x, float y, float z)
     int j;
 
     glPushMatrix();
+    set_material(&(scene->road.material));
     glBindTexture(GL_TEXTURE_2D, scene->road.texture_id);
     glScalef(5.0, 5.0, 5.0);
 
@@ -320,9 +366,10 @@ void draw_mainhouse(const Scene* scene, float x, float y, float z)
     glPushMatrix();
     glTranslatef(x, y, z);
 
-    //MAIN HOUSE
+    /*MAIN HOUSE*/
     glPushMatrix();
     glScalef(2.0, 2.0, 2.0);
+    set_material(&(scene->house.material));
     glBindTexture(GL_TEXTURE_2D, scene->house.texture_id);
     draw_model(&(scene->house));
     glPopMatrix();
@@ -330,28 +377,72 @@ void draw_mainhouse(const Scene* scene, float x, float y, float z)
     glPopMatrix();
 }
 
-void draw_thecity(const Scene* scene, float x, float y, float z)
+void draw_house2(const Scene* scene,  float x, float y, float z)
 {
-    //GRASS
-    draw_grass(scene, 4.0, 0.0, 0.0);  //Middle grass.
+    int i;
+
+    glPushMatrix();
+    glTranslatef(x, y, z);
+
+    /*NEIGHBOUR'S HOUSE*/
+    glPushMatrix();
+
+    glRotatef(-90.0, 0.0, 0.0, 1.0);
+    glScalef(25.0, 25.0, 25.0);
+    glTranslatef(0.1, -0.08, 0.0);
+    glBindTexture(GL_TEXTURE_2D, scene->house2.texture_id);
+    draw_model(&(scene->house2.model));
+
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
+void draw_house3(const Scene* scene, float x, float y, float z)
+{
+
+    glPushMatrix();
+    glTranslatef(x, y, z);
+
+    /*FRONT NEIGHBOUR*/
+    glPushMatrix();
+
+    glRotatef(-90.0, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->house3.texture_id);
+    draw_model(&(scene->house3.model));
+
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
+void draw_thecity(const Scene* scene)
+{
+    /*GRASS*/
+    draw_grass(scene, 4.0, 0.0, 0.0);  /*Middle grass.*/
     draw_grass(scene, 4.0, 6.0, 0.0);
 
-    draw_grass2(scene, 7.0, 9.0, 0.0);  //Front and back grass.
+    draw_grass2(scene, 7.0, 9.0, 0.0);  /*Front and back grass.*/
     draw_grass2(scene, 7.0, -6.0, 0.0);
     
-    draw_grass3(scene, 7.0, 9.0, 0.0);  //Side grasses.
+    draw_grass3(scene, 7.0, 9.0, 0.0);  /*Side grasses.*/
     draw_grass3(scene, -8.0, 9.0, 0.0);
 
-    //ROAD
-    draw_road(scene, 4.0, 2.0, 0.0);  //Middle road.
-    draw_road(scene, 4.0, 8.0, 0.0);  //The road behind the small houses.
-    draw_road(scene, 4.0, -4.0, 0.0); //The road behind the big house.
+    /*ROAD*/
+    draw_road(scene, 4.0, 2.0, 0.0);  /*Middle road.*/
+    draw_road(scene, 4.0, 8.0, 0.0);  /*The road behind the small houses.*/
+    draw_road(scene, 4.0, -4.0, 0.0); /*The road behind the big house.*/
 
-    draw_road2(scene, 6.0, 8.0, 0.0);  //Side roads.
+    draw_road2(scene, 6.0, 8.0, 0.0);  /*Side roads.*/
     draw_road2(scene, -6.0, 8.0, 0.0);
 
-    //HOUSES
-    draw_mainhouse(scene, 0.0, -1.0, 0.0);  //The main house of the small houses.
+    /*HOUSES*/
+    draw_mainhouse(scene, 0.0, -1.0, 0.0);  /*The main house of the small houses.*/
+
+    draw_house2(scene, -15.0, -1.0, 0.0);   /*Small houses on the left and right side of the main house.*/
+    draw_house2(scene, 15.0, -1.0, 0.0);
+
+    draw_house3(scene, 0.0, 20.0, 0.0);     /*The big house in front of the main house.*/
 
 }
 
@@ -360,7 +451,7 @@ void draw_scene(const Scene* scene)
     set_lighting();
     draw_origin();
     
-    draw_thecity(scene, 0.0, 0.0, 0.0);
+    draw_thecity(scene);
 }
 
 void draw_origin()

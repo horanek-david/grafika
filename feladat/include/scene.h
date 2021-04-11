@@ -24,6 +24,8 @@ typedef struct Scene
     Soil soil;
     Soil road;
     House house;
+    House house2;
+    House house3;
 } Scene;
 
 /**
@@ -40,6 +42,16 @@ void init_road(Scene* scene);
  * Initialize the main house by loading models and textures.
  */
 void init_mainhouse(Scene* scene);
+
+/**
+ * Initialize the houses next to the main house by loading models and textures.
+ */
+void init_house2(Scene* scene);
+
+/**
+ * Initialize the big house in front of the main house by loading models and textures.
+ */
+void init_house3(Scene* scene);
 
 /**
  * Initialize the scene by loading models.
@@ -72,7 +84,7 @@ void draw_grass2(const Scene* scene, float x, float y, float z);
 void draw_grass3(const Scene* scene, float x, float y, float z);
 
 /**
- * Draw a road on front of the houses and also behind them.
+ * Draw a road in front of the houses and also behind them.
  */
 void draw_road(const Scene* scene, float x, float y, float z);
 
@@ -87,9 +99,19 @@ void draw_road2(const Scene* scene, float x, float y, float z);
 void draw_mainhouse(const Scene* scene, float x, float y, float z);
 
 /**
+ * Draw the second house.
+ */
+void draw_house2(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw the big house.
+ */
+void draw_house3(const Scene* scene, float x, float y, float z);
+
+/**
  * Draw the city.
  */
-void draw_thecity(const Scene* scene, float x, float y, float z);
+void draw_thecity(const Scene* scene);
 
 /**
  * Draw the scene objects.
