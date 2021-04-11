@@ -12,11 +12,19 @@ typedef struct Soil
     GLuint texture_id;
 } Soil;
 
+typedef struct Railing
+{
+    Model model;
+    Material material;
+    GLuint texture_id;
+} Railing;
+
 typedef struct House
 {
     Model model;
     Material material;
     GLuint texture_id;
+    Railing fence;
 } House;
 
 typedef struct Scene
@@ -26,6 +34,7 @@ typedef struct Scene
     House house;
     House house2;
     House house3;
+    Railing barrier;
 } Scene;
 
 /**
@@ -52,6 +61,11 @@ void init_house2(Scene* scene);
  * Initialize the big house in front of the main house by loading models and textures.
  */
 void init_house3(Scene* scene);
+
+/**
+ * Initialize the fence around the houses by loading models and textures.
+ */
+void init_fence(Railing* fence);
 
 /**
  * Initialize the scene by loading models.
@@ -107,6 +121,16 @@ void draw_house2(const Scene* scene, float x, float y, float z);
  * Draw the big house.
  */
 void draw_house3(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw a fence around the small house.
+ */
+void draw_fence(const Railing* fence);
+
+/**
+ * Draw a fence around the big house.
+ */
+void draw_fence2(const Railing* fence);
 
 /**
  * Draw the city.

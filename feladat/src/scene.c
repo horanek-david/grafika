@@ -61,6 +61,8 @@ void init_mainhouse(Scene* scene)
     scene->house.material.specular.blue = 0.0;
 
     scene->house.material.shininess = 0.0;
+    
+    init_fence(&(scene->house.fence));
 }
 
 void init_house2(Scene* scene)
@@ -81,6 +83,8 @@ void init_house2(Scene* scene)
     scene->house2.material.specular.blue = 0.0;
 
     scene->house2.material.shininess = 0.0;
+    
+    init_fence(&(scene->house2.fence));
 }
 
 void init_house3(Scene* scene)
@@ -101,6 +105,28 @@ void init_house3(Scene* scene)
     scene->house3.material.specular.blue = 0.0;
 
     scene->house3.material.shininess = 0.0;
+    
+    init_fence(&(scene->house3.fence));
+}
+
+void init_fence(Railing* fence)
+{
+    load_model(&(fence->model), "models/fence.obj");
+    fence->texture_id = load_texture("textures/fence.png"); 
+
+    fence->material.ambient.red = 1.0;
+    fence->material.ambient.green = 1.0;
+    fence->material.ambient.blue = 1.0;
+
+    fence->material.diffuse.red = 1.0;
+    fence->material.diffuse.green = 1.0;
+    fence->material.diffuse.blue = 1.0;
+
+    fence->material.specular.red = 0.0;
+    fence->material.specular.green = 0.0;
+    fence->material.specular.blue = 0.0;
+
+    fence->material.shininess = 0.0;
 }
 
 void init_scene(Scene* scene)
@@ -374,6 +400,9 @@ void draw_mainhouse(const Scene* scene, float x, float y, float z)
     draw_model(&(scene->house));
     glPopMatrix();
 
+    /*FENCES*/
+    draw_fence(&(scene->house.fence));
+
     glPopMatrix();
 }
 
@@ -395,6 +424,9 @@ void draw_house2(const Scene* scene,  float x, float y, float z)
 
     glPopMatrix();
 
+    /*FENCES*/
+    draw_fence(&(scene->house.fence));
+
     glPopMatrix();
 }
 
@@ -413,7 +445,172 @@ void draw_house3(const Scene* scene, float x, float y, float z)
 
     glPopMatrix();
 
+    /*FENCES*/
+    draw_fence2(&(scene->house.fence));
+
     glPopMatrix();
+}
+
+void draw_fence(const Railing* fence)
+{
+    int i;
+
+    /*LEFT SIDE FENCES*/
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, fence->texture_id);
+    glTranslatef(4.0, 2.5, 0.0);
+    draw_model(&(fence->model));
+
+    for(i=0; i<3; i++)
+    {
+        glTranslatef(0.0, -4.0, 0.0);
+        draw_model(&(fence->model));
+    }
+    glPopMatrix();
+
+    /*FRONT FENCES*/
+    glPushMatrix();
+    glRotatef(90.0, 0.0, 0.0, 1.0);
+    glScalef(1.0, 1.0, 1.0);
+    glTranslatef(5.0, -1.5, 0.0);
+    draw_model(&(fence->model));
+
+    glTranslatef(0.0, 6.5, 0.0);
+    draw_model(&(fence->model));
+    glPopMatrix();
+
+    /*RIGHT SIDE FENCES*/
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    glTranslatef(-7.5, 2.5, 0.0);
+    draw_model(&(fence->model));
+    
+    for(i=0; i<3; i++)
+    {
+        glTranslatef(0.0, -4.0, 0.0);
+        draw_model(&(fence->model));
+    }
+    glPopMatrix();
+
+    /*BACK FENCES*/
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(90.0, 0.0, 0.0, 1.0);
+    glTranslatef(-12.0, -1.5, 0.0);
+    draw_model(&(fence->model));
+    glTranslatef(0.0, 6.5, 0.0);
+    draw_model(&(fence->model));
+    glTranslatef(0.0, -2.15, 0.0);
+    draw_model(&(fence->model));
+
+
+    glPopMatrix();
+}
+
+void draw_fence2(const Railing* fence)
+{
+    int i;
+    
+    /*FRONT1*/
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, fence->texture_id);
+    glTranslatef(5.0, 5.0, 0.0);
+    draw_model(&(fence->model));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, 4.0, 0.0);
+        draw_model(&(fence->model));
+    }
+    
+    glPopMatrix();
+
+    /*FRONT2*/
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, fence->texture_id);
+    glTranslatef(5.0, -5.0, 0.0);
+    draw_model(&(fence->model));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, -4.0, 0.0);
+        draw_model(&(fence->model));
+    }
+    
+    glPopMatrix();
+
+    /*BACK1*/
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, fence->texture_id);
+    glTranslatef(-15.0, 5.0, 0.0);
+    draw_model(&(fence->model));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, 4.0, 0.0);
+        draw_model(&(fence->model));
+    }
+    
+    glPopMatrix();
+
+    /*BACK2*/
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glRotatef(-90, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, fence->texture_id);
+    glTranslatef(-15.0, -5.0, 0.0);
+    draw_model(&(fence->model));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, -4.0, 0.0);
+        draw_model(&(fence->model));
+    }
+    
+    glPopMatrix();
+
+
+    /*SIDE1*/
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, fence->texture_id);
+    glTranslatef(-23.5, -2.5, 0.0);
+    draw_model(&(fence->model));
+
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, 3.8, 0.0);
+        draw_model(&(fence->model));
+    }
+    glPopMatrix();
+
+    /*SIDE2*/
+    glPushMatrix();
+
+    glScalef(1.0, 1.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, fence->texture_id);
+    glTranslatef(23.5, -2.5, 0.0);
+    draw_model(&(fence->model));
+    
+    for(i=0; i<4; i++)
+    {
+        glTranslatef(0.0, 3.8, 0.0);
+        draw_model(&(fence->model));
+    }
+    glPopMatrix();
+
 }
 
 void draw_thecity(const Scene* scene)
