@@ -6,6 +6,27 @@
 
 #include <obj/model.h>
 
+typedef struct Car
+{
+    Model body;
+    Model tire_front;
+    Model tire_back;
+    Model glass;
+    Model lamp;
+    Material material_car_body;
+    Material material_car_glass;
+    Material material_car_lamp;
+    GLuint texture_body_id;
+    GLuint texture_tire_id;
+    vec3 position;
+    vec3 speed;
+    int is_light_on;
+    float rotate_tire;  
+    float around_tire;  
+    float rotate_car; 
+    float speedz;  
+} Car;
+
 typedef struct Soil
 {
     Material material;
@@ -29,6 +50,7 @@ typedef struct House
 
 typedef struct Scene
 {
+    Car car;
     Soil soil;
     Soil road;
     House house;
@@ -73,9 +95,19 @@ void init_fence(Railing* fence);
 void init_barrier(Scene* scene);
 
 /**
+ * Initialize the car by loading models.
+ */
+void init_car(Scene* scene);
+
+/**
  * Initialize the scene by loading models.
  */
 void init_scene(Scene* scene);
+
+/**
+ * Update scene
+ */
+void update_scene(Scene* scene, Camera* camera, double time);
 
 /**
  * Set the lighting of the scene.
@@ -86,6 +118,31 @@ void set_lighting();
  * Set the current material.
  */
 void set_material(const Material* material);
+
+/**
+ * Set the lighting of the left car lamp.
+ */
+void set_car_lamp_l(float x, float y, float z);
+
+/**
+ * Set the lighting of the right car lamp.
+ */
+void set_car_lamp_r(float x, float y, float z);
+
+/**
+ * Set car speed
+ */
+void set_car_speed(Scene* scene, float x);
+
+/**
+ * Set car side speed
+ */
+void set_car_side_speed(Scene* scene, float y);
+
+/**
+ * Draw the car objects.
+ */
+void draw_car(const Scene* scene);
 
 /**
  * Draw a grass under the houses.

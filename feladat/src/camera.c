@@ -31,7 +31,11 @@ void update_camera(Camera* camera, double time)
     camera->position.y += sin(angle) * camera->speed.y * time;
     camera->position.x += cos(side_angle) * camera->speed.x * time;
     camera->position.y += sin(side_angle) * camera->speed.x * time;
+    
     camera->position.z += camera->speed.z * time;
+    if(camera->position.z < 0.5){
+        camera->position.z = 0.5;
+    }
 }
 
 void set_view(const Camera* camera)

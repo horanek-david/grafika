@@ -47,6 +47,16 @@ void keyboard(unsigned char key, int x, int y);
 void keyboard_up(unsigned char key, int x, int y);
 
 /**
+ * Call after special key event.
+ */
+void specialkey(int key, int x, int y);
+
+/**
+ * Call after special key release event.
+ */
+void specialkey_up(int key, int x, int y);
+
+/**
  * Call when there is no other event.
  */
 void idle();

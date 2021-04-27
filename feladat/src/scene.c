@@ -2,6 +2,8 @@
 
 #include <GL/glut.h>
 
+#include <math.h>
+
 #include <obj/load.h>
 #include <obj/draw.h>
 
@@ -149,6 +151,65 @@ void init_barrier(Scene* scene)
     scene->barrier.material.shininess = 0.0;
 }
 
+void init_car(Scene* scene)
+{
+    scene->car.is_light_on = FALSE;
+
+    load_model(&(scene->car.body), "models/porsche01.obj");
+    load_model(&(scene->car.tire_front), "models/porsche02.obj");
+    load_model(&(scene->car.tire_back), "models/porsche03.obj");
+    load_model(&(scene->car.glass), "models/porsche04.obj");
+    load_model(&(scene->car.lamp), "models/porsche05.obj");
+    scene->car.texture_body_id = load_texture("textures/porsche01.bmp");
+    scene->car.texture_tire_id = load_texture("textures/porsche02.bmp");
+
+    /* Car's body materials */
+    scene->car.material_car_body.ambient.red = 1.0;
+    scene->car.material_car_body.ambient.green = 1.0;
+    scene->car.material_car_body.ambient.blue = 1.0;
+    scene->car.material_car_body.ambient.alpha = 1.0;
+
+    scene->car.material_car_body.diffuse.red = 1.0;
+    scene->car.material_car_body.diffuse.green = 1.0;
+    scene->car.material_car_body.diffuse.blue = 1.0;
+    scene->car.material_car_body.diffuse.alpha = 1.0;
+
+    scene->car.material_car_body.specular.red = 1.0;
+    scene->car.material_car_body.specular.green = 1.0;
+    scene->car.material_car_body.specular.blue = 1.0;
+    scene->car.material_car_body.specular.alpha = 1.0;
+
+    scene->car.material_car_body.shininess = 0.0;
+
+    /* Car's glass materials */
+    scene->car.material_car_glass.ambient.red = 0.2f;
+    scene->car.material_car_glass.ambient.green = 0.2f;
+    scene->car.material_car_glass.ambient.blue = 0.2f;
+    scene->car.material_car_glass.ambient.alpha = 0.2f;
+
+    scene->car.material_car_glass.diffuse.red = 0.2f;
+    scene->car.material_car_glass.diffuse.green = 0.2f;
+    scene->car.material_car_glass.diffuse.blue = 0.2f;
+    scene->car.material_car_glass.diffuse.alpha = 0.2f;
+
+    scene->car.material_car_glass.specular.red = 0.2f;
+    scene->car.material_car_glass.specular.green = 0.2f;
+    scene->car.material_car_glass.specular.blue = 0.2f;
+    scene->car.material_car_glass.specular.alpha = 0.2f;
+
+    /* Car's lamp materials */
+    scene->car.material_car_lamp.ambient.red = 1.0f;
+    scene->car.material_car_lamp.ambient.green = 1.0f;
+    scene->car.material_car_lamp.ambient.blue = 1.0f;
+    scene->car.material_car_lamp.ambient.alpha = 1.0f;
+    
+    scene->car.material_car_lamp.diffuse.red = 1.0f;
+    scene->car.material_car_lamp.diffuse.green = 1.0f;
+    scene->car.material_car_lamp.diffuse.blue = 1.0f;
+    scene->car.material_car_lamp.ambient.alpha = 0.5f;
+    
+}
+
 void init_scene(Scene* scene)
 {
     init_soil(scene);
@@ -157,6 +218,75 @@ void init_scene(Scene* scene)
     init_house2(scene);
     init_house3(scene);
     init_barrier(scene);
+    init_car(scene);
+}
+
+void update_scene(Scene* scene, Camera* camera, double time)
+{
+    float x, n, i, j, r;
+    float alpha, beta, a, b, c;
+    float speed, around;
+    time = time * 1.2;
+    
+    speed = scene->car.speedz * time;  /* For side movement */
+    x = scene->car.position.x;
+    n = x + (scene->car.speed.x * time);
+
+
+    /* Only 40° allowed for wheel rotation*/
+    scene->car.around_tire += speed * 20;
+    
+    if(scene->car.around_tire > 40)
+        scene->car.around_tire = 40;
+
+    if(scene->car.around_tire < -40)
+        scene->car.around_tire = -40;
+
+
+
+    /* Wheel rotation if the car is moving forward*/
+    r = 0.8;    /* Wheel radius*/
+    i = n - x;
+    j = (i * 180) / (r * 3.14);
+    scene->car.rotate_tire += j;
+
+
+    /* Car turning */
+    if(scene->car.speed.x == -1){
+        around = scene->car.around_tire;
+    }
+    else if(scene->car.speed.x == 1){
+        around = scene->car.around_tire * -1;
+    }
+
+    beta = scene->car.rotate_car;               /* Car turning's degree*/         
+    beta += around / 25;                         /* Car full turning's degree /  rotation's deceleration: 25 */
+
+    alpha = 90 - beta;                          /* The Opposite angle of the angle of rotation */
+    c = scene->car.speed.x * time;              /* The car's forward movement */
+    a = sin(degree_to_radian(alpha)) * c;       /* The x direction displacement from the calculated progress */
+    b = cos(degree_to_radian(alpha)) * c;       /* The x direction displacement from the calculated progress */
+
+    scene->car.position.x += a;                 
+    scene->car.position.y += b;
+
+    /* The wheel will only rotate if the car is moving */
+    if(scene->car.speed.x != 0)
+        scene->car.rotate_car = beta;
+
+
+
+    /* Switching on or off the lamp */
+    if (scene->car.is_light_on) {
+        scene->car.material_car_lamp.ambient.red = 1.0f;
+        scene->car.material_car_lamp.ambient.green = 1.0f;
+        scene->car.material_car_lamp.ambient.blue = 1.0f;
+    }
+    else{
+        scene->car.material_car_lamp.ambient.red = 0.0f;
+        scene->car.material_car_lamp.ambient.green = 0.0f;
+        scene->car.material_car_lamp.ambient.blue = 0.0f;
+    }
 }
 
 void set_lighting()
@@ -197,6 +327,181 @@ void set_material(const Material* material)
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular_material_color);
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &(material->shininess));
+}
+
+void set_car_lamp_l(float x, float y, float z)
+{
+    float ambient_light[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float diffuse_light[] = { 1.0f, 1.0f, 1.0, 1.0f };
+    float specular_light[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float position[] = { x, y, z, 1.0f };
+    float spot_direction[] = { -1.0, 0.0, 0.0};
+
+    glLightfv(GL_LIGHT2, GL_AMBIENT, ambient_light);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse_light);
+    glLightfv(GL_LIGHT2, GL_SPECULAR, specular_light);
+    glLightfv(GL_LIGHT2, GL_POSITION, position);
+    glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 1.5);
+    glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.5);
+    glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.2);
+
+    glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 90.0);
+    glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 2.0);
+}
+
+void set_car_lamp_r(float x, float y, float z)
+{
+    float ambient_light[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float diffuse_light[] = { 1.0f, 1.0f, 1.0, 1.0f };
+    float specular_light[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float position[] = { x, y, z, 1.0f };
+    float spot_direction[] = { -1.0, 0.0, 0.0};
+
+    glLightfv(GL_LIGHT3, GL_AMBIENT, ambient_light);
+    glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse_light);
+    glLightfv(GL_LIGHT3, GL_SPECULAR, specular_light);
+    glLightfv(GL_LIGHT3, GL_POSITION, position);
+    glLightf(GL_LIGHT3, GL_CONSTANT_ATTENUATION, 1.5);
+    glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 0.5);
+    glLightf(GL_LIGHT3, GL_QUADRATIC_ATTENUATION, 0.2);
+
+    glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 90.0);
+    glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 2.0); 
+}
+
+void set_car_speed(Scene* scene, float x)
+{
+    scene->car.speed.x = x;
+}
+
+void set_car_side_speed(Scene* scene, float y)
+{
+    scene->car.speedz = y;
+}
+
+void draw_car(const Scene* scene)
+{
+float x, y, z;
+    x = scene->car.position.x;
+    y = scene->car.position.y;
+    z = scene->car.position.z + 0.65;
+
+
+    glPushMatrix();
+    
+    /* Position */
+    glTranslatef(x, y, z);
+
+    /* Car turning */
+    glRotatef(scene->car.rotate_car, 0.0, 0.0, 1.0);
+
+    /* Glass */
+    glPushMatrix();
+        glDepthMask(GL_FALSE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+        set_material(&(scene->car.material_car_glass));
+
+        //if (scene->car.carview == NORMALW)
+            draw_model(&(scene->car.glass));
+
+        glDisable(GL_BLEND);
+        glDepthMask(GL_TRUE);
+    glPopMatrix();
+
+    /* Car's lamp */
+    glPushMatrix();
+        glBindTexture(GL_TEXTURE_2D, 0);
+        set_material(&(scene->car.material_car_lamp));
+        glTranslatef(-0.001, 0.0, 0.0);
+        draw_model(&(scene->car.lamp));
+
+        /* Left side lamp's light */
+        glPushMatrix();
+            glTranslatef(-2.75, 0.65, 0.0);
+            glRotatef(15.0, 0.0, 0.0, 1.0);
+            set_car_lamp_l(0, 0, 0);
+
+            if(scene->car.is_light_on)
+            {
+                glEnable(GL_LIGHT2);
+            }
+            else
+            {
+                glDisable(GL_LIGHT2);
+            }  
+        glPopMatrix();
+
+        /* Right side lamp's light */
+        glPushMatrix();
+            glTranslatef(-2.85, -0.55, 0.0);
+            glRotatef(30.0, 0.0, 0.0, 1.0);
+            set_car_lamp_r(0, 0, 0);
+
+            if(scene->car.is_light_on)
+            {
+                glEnable(GL_LIGHT3);
+            }
+            else
+            {
+                glDisable(GL_LIGHT3);
+            }
+        glPopMatrix();
+    glPopMatrix();
+
+    /* Car's body */
+    glPushMatrix();
+        set_material(&(scene->car.material_car_body));
+        glBindTexture(GL_TEXTURE_2D, scene->car.texture_body_id);
+        draw_model(&(scene->car.body));
+    glPopMatrix(); 
+
+    /* Right back wheel */
+    glPushMatrix();
+        glBindTexture(GL_TEXTURE_2D, scene->car.texture_tire_id);
+        glTranslatef(0, 0.55, -0.3);
+        /* Wheel's rotation */
+        glRotatef(scene->car.rotate_tire, 0.0, 1.0, 0.0);
+        draw_model(&(scene->car.tire_back));
+    glPopMatrix();
+
+    /* Left back wheel */
+    glPushMatrix();
+        glBindTexture(GL_TEXTURE_2D, scene->car.texture_tire_id);
+        glRotated(180, 0.0, 0.0, 1.0);
+        glTranslatef(0, 0.55, -0.3);
+        /* Wheel's rotation */
+        glRotatef(-scene->car.rotate_tire, 0.0, 1.0, 0.0);
+        draw_model(&(scene->car.tire_back));
+    glPopMatrix();
+
+    /* Right front wheel */
+    glPushMatrix();
+        glBindTexture(GL_TEXTURE_2D, scene->car.texture_tire_id);
+        glTranslatef(-2.36, 0.6, -0.32);
+        /* Wheel turning */
+        glRotatef(scene->car.around_tire, 0.0, 0.0, 1.0);
+        /* Wheel's rotation */
+        glRotatef(scene->car.rotate_tire, 0.0, 1.0, 0.0);
+        draw_model(&(scene->car.tire_front));
+    glPopMatrix();
+
+    /* Left front wheel */
+    glPushMatrix();
+        glBindTexture(GL_TEXTURE_2D, scene->car.texture_tire_id);
+        glRotated(180, 0.0, 0.0, 1.0);
+        glTranslatef(2.36, 0.6, -0.32);
+        /* Wheel turning */
+        glRotatef(scene->car.around_tire, 0.0, 0.0, 1.0);
+        /* Wheel's rotation */
+        glRotatef(-scene->car.rotate_tire, 0.0, 1.0, 0.0);
+        draw_model(&(scene->car.tire_front));
+    glPopMatrix();
+
+    glPopMatrix();
 }
 
 void draw_grass(const Scene* scene, float x, float y, float z)
@@ -742,6 +1047,8 @@ void draw_scene(const Scene* scene)
     draw_origin();
     
     draw_thecity(scene);
+
+    draw_car(scene);
 }
 
 void draw_origin()

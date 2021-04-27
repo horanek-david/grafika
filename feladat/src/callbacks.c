@@ -118,6 +118,42 @@ void keyboard_up(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
+void specialkey(int key, int x, int y)
+{
+    switch (key) {
+    case GLUT_KEY_DOWN:
+        set_car_speed(&scene, 1);
+        break;
+    case GLUT_KEY_UP:
+        set_car_speed(&scene, -1);
+        break;
+    case GLUT_KEY_LEFT:
+        set_car_side_speed(&scene, 1);
+        break;
+    case GLUT_KEY_RIGHT:
+        set_car_side_speed(&scene, -1);
+        break;
+    }
+
+    glutPostRedisplay();
+}
+
+void specialkey_up(int key, int x, int y)
+{
+    switch (key) {
+    case GLUT_KEY_DOWN:
+    case GLUT_KEY_UP:
+        set_car_speed(&scene, 0.0);
+        break;
+    case GLUT_KEY_LEFT:
+    case GLUT_KEY_RIGHT:
+        set_car_side_speed(&scene, 0.0);
+        break;
+    }
+
+    glutPostRedisplay();
+}
+
 void idle()
 {
     static int last_frame_time = 0;
@@ -129,6 +165,7 @@ void idle()
     last_frame_time = current_time;
 
     update_camera(&camera, elapsed_time * 10);
+    update_scene(&scene, &camera, elapsed_time * 5);
 
     glutPostRedisplay();
 }
