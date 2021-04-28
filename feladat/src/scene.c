@@ -26,6 +26,48 @@ void init_soil(Scene* scene)
     scene->soil.material.shininess = 0.0;
 }
 
+void init_tree(Scene* scene)
+{
+    load_model(&(scene->tree.trunk), "models/trunk.obj");
+    load_model(&(scene->tree.leaves), "models/leaves.obj");
+
+    /* TRUNK */
+    scene->tree.material_trunk.ambient.red = 0.2295f;
+    scene->tree.material_trunk.ambient.green = 0.08825f;
+    scene->tree.material_trunk.ambient.blue = 0.0275f;
+    scene->tree.material_trunk.ambient.alpha =1.0f;
+
+    scene->tree.material_trunk.diffuse.red = 0.5508f;
+    scene->tree.material_trunk.diffuse.green = 0.2118f;
+    scene->tree.material_trunk.diffuse.blue = 0.066f;
+    scene->tree.material_trunk.diffuse.alpha =1.0f;
+
+    scene->tree.material_trunk.specular.red = 0.580594f;
+    scene->tree.material_trunk.specular.green = 0.223257f;
+    scene->tree.material_trunk.specular.blue = 0.0695701f;
+    scene->tree.material_trunk.specular.alpha =1.0f;
+
+    scene->tree.material_trunk.shininess = 51.2f;
+
+    /* LEAVES */
+    scene->tree.material_leaves.ambient.red = 0.0215f;
+    scene->tree.material_leaves.ambient.green = 0.1745f;
+    scene->tree.material_leaves.ambient.blue = 0.0215f;
+    scene->tree.material_leaves.ambient.alpha =0.55f;
+
+    scene->tree.material_leaves.diffuse.red = 0.07568f;
+    scene->tree.material_leaves.diffuse.green = 0.61424f;
+    scene->tree.material_leaves.diffuse.blue = 0.07568f;
+    scene->tree.material_leaves.diffuse.alpha =0.55f;
+
+    scene->tree.material_leaves.specular.red = 0.633f;
+    scene->tree.material_leaves.specular.green = 0.727811f;
+    scene->tree.material_leaves.specular.blue = 0.633f;
+    scene->tree.material_leaves.specular.alpha =0.55f;
+
+    scene->tree.material_leaves.shininess = 76.8f;
+}
+
 void init_road(Scene* scene)
 {
     scene->road.texture_id = load_texture("textures/road.jpg"); 
@@ -213,6 +255,7 @@ void init_car(Scene* scene)
 void init_scene(Scene* scene)
 {
     init_soil(scene);
+    init_tree(scene);
     init_road(scene);
     init_mainhouse(scene);
     init_house2(scene);
@@ -233,7 +276,7 @@ void update_scene(Scene* scene, Camera* camera, double time)
     n = x + (scene->car.speed.x * time);
 
 
-    /* Only 40° allowed for wheel rotation*/
+    /* Only 40° allowed for wheel rotation */
     scene->car.around_tire += speed * 20;
     
     if(scene->car.around_tire > 40)
@@ -244,8 +287,8 @@ void update_scene(Scene* scene, Camera* camera, double time)
 
 
 
-    /* Wheel rotation if the car is moving forward*/
-    r = 0.8;    /* Wheel radius*/
+    /* Wheel rotation if the car is moving forward */
+    r = 0.8;    /* Wheel radius */
     i = n - x;
     j = (i * 180) / (r * 3.14);
     scene->car.rotate_tire += j;
@@ -259,7 +302,7 @@ void update_scene(Scene* scene, Camera* camera, double time)
         around = scene->car.around_tire * -1;
     }
 
-    beta = scene->car.rotate_car;               /* Car turning's degree*/         
+    beta = scene->car.rotate_car;               /* Car turning's degree */         
     beta += around / 25;                         /* Car full turning's degree /  rotation's deceleration: 25 */
 
     alpha = 90 - beta;                          /* The Opposite angle of the angle of rotation */
@@ -387,7 +430,6 @@ float x, y, z;
     x = scene->car.position.x;
     y = scene->car.position.y;
     z = scene->car.position.z + 0.65;
-
 
     glPushMatrix();
     
@@ -710,6 +752,32 @@ void draw_road2(const Scene* scene, float x, float y, float z)
     }
 
     glPopMatrix();
+}
+
+void draw_tree(const Scene* scene, float x, float y, float z)
+{
+
+
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glTranslatef(x, y, z);
+
+    /* TRUNK */
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    set_material(&(scene->tree.material_trunk));
+    draw_model(&(scene->tree.trunk));
+    glPopMatrix();
+
+    /* LEAVES */
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    set_material(&(scene->tree.material_leaves));
+    draw_model(&(scene->tree.leaves));
+    glPopMatrix();
+
+    glPopMatrix();
+
 }
 
 void draw_mainhouse(const Scene* scene, float x, float y, float z)
@@ -1039,6 +1107,10 @@ void draw_thecity(const Scene* scene)
     /*BARRIER*/
     draw_barrier(scene);
 
+    /*TREES*/
+    draw_tree(scene, -20.0, 20.0, 0.0);
+    draw_tree(scene, 20.0, 20.0, 0.0);
+
 }
 
 void draw_scene(const Scene* scene)
@@ -1046,9 +1118,15 @@ void draw_scene(const Scene* scene)
     set_lighting();
     draw_origin();
     
+    /* The city */
     draw_thecity(scene);
 
+    /* The car */
+    glPushMatrix();
+    glTranslatef(17.0, 20.0, 0.0);
     draw_car(scene);
+    glPopMatrix();
+
 }
 
 void draw_origin()

@@ -33,6 +33,14 @@ typedef struct Soil
     GLuint texture_id;
 } Soil;
 
+typedef struct Tree
+{
+    Model leaves;
+    Model trunk;
+    Material material_leaves;
+    Material material_trunk;
+} Tree;
+
 typedef struct Railing
 {
     Model model;
@@ -53,6 +61,7 @@ typedef struct Scene
     Car car;
     Soil soil;
     Soil road;
+    Tree tree;
     House house;
     House house2;
     House house3;
@@ -63,6 +72,11 @@ typedef struct Scene
  * Initialize the soil by loading textures.
  */
 void init_soil(Scene* scene);
+
+/**
+ * Initialize the tree by loading textures.
+ */
+void init_tree(Scene* scene);
 
 /**
  * Initialize the road by loading models.
@@ -168,6 +182,11 @@ void draw_road(const Scene* scene, float x, float y, float z);
  * Draw the side roads.
  */
 void draw_road2(const Scene* scene, float x, float y, float z);
+
+/**
+ * Draw a tree.
+ */
+void draw_tree(const Scene* scene, float x, float y, float z);
 
 /**
  * Draw the main house.
