@@ -56,6 +56,15 @@ typedef struct House
     Railing fence;
 } House;
 
+typedef struct Furnitures
+{
+    Model model;
+    Material material;
+    GLuint texture_id;
+    float furniture_rocking;
+    float furniture_rocking_direction;
+} Furnitures;
+
 typedef struct Scene
 {
     Car car;
@@ -65,6 +74,10 @@ typedef struct Scene
     House house;
     House house2;
     House house3;
+    Furnitures rocking_chair;
+    Furnitures chair;
+    Furnitures table;
+    Furnitures dresser;
     Railing barrier;
     float sun_brightness;
     float sun_brightness_inc;
@@ -129,7 +142,7 @@ void update_scene(Scene* scene, Camera* camera, double time);
 /**
  * Set the lighting of the scene.
  */
-void set_lighting(Scene* scene);
+void set_lighting(const Scene* scene);
 
 /**
  * Set the sun brightness
@@ -225,6 +238,26 @@ void draw_fence2(const Railing* fence);
  * Draw a barrier around the city.
  */
 void draw_barrier(const Scene* scene);
+
+/**
+ * Draw a rocking chair.
+ */
+void draw_rocking_chair(const Scene* scene,  float x, float y, float z, float degree);
+
+/**
+ * Draw a normal chair.
+ */
+void draw_chair(const Scene* scene,  float x, float y, float z, float degree);
+
+/**
+ * Draw a table.
+ */
+void draw_table(const Scene* scene,  float x, float y, float z, float degree);
+
+/**
+ * Draw a dresser.
+ */
+void draw_dresser(const Scene* scene,  float x, float y, float z, float degree);
 
 /**
  * Draw the city.

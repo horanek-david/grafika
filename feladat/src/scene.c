@@ -252,6 +252,88 @@ void init_car(Scene* scene)
     
 }
 
+void init_rocking_chair(Scene* scene)
+{
+    scene->rocking_chair.furniture_rocking_direction = 1.0;
+
+    load_model(&(scene->rocking_chair.model), "models/rockingchair.obj");
+    scene->rocking_chair.texture_id = load_texture("textures/wood.jpg"); 
+
+    scene->rocking_chair.material.ambient.red = 1.0;
+    scene->rocking_chair.material.ambient.green = 1.0;
+    scene->rocking_chair.material.ambient.blue = 1.0;
+
+    scene->rocking_chair.material.diffuse.red = 1.0;
+    scene->rocking_chair.material.diffuse.green = 1.0;
+    scene->rocking_chair.material.diffuse.blue = 1.0;
+
+    scene->rocking_chair.material.specular.red = 0.0;
+    scene->rocking_chair.material.specular.green = 0.0;
+    scene->rocking_chair.material.specular.blue = 0.0;
+
+    scene->rocking_chair.material.shininess = 0.0;
+}
+
+void init_chair(Scene* scene)
+{
+    load_model(&(scene->chair.model), "models/chair.obj");
+    scene->chair.texture_id = load_texture("textures/wood.jpg"); 
+
+    scene->chair.material.ambient.red = 1.0;
+    scene->chair.material.ambient.green = 1.0;
+    scene->chair.material.ambient.blue = 1.0;
+
+    scene->chair.material.diffuse.red = 1.0;
+    scene->chair.material.diffuse.green = 1.0;
+    scene->chair.material.diffuse.blue = 1.0;
+
+    scene->chair.material.specular.red = 0.0;
+    scene->chair.material.specular.green = 0.0;
+    scene->chair.material.specular.blue = 0.0;
+
+    scene->chair.material.shininess = 0.0;
+}
+
+void init_table(Scene* scene)
+{
+    load_model(&(scene->table.model), "models/table.obj");
+    scene->table.texture_id = load_texture("textures/wood.jpg"); 
+
+    scene->table.material.ambient.red = 1.0;
+    scene->table.material.ambient.green = 1.0;
+    scene->table.material.ambient.blue = 1.0;
+
+    scene->table.material.diffuse.red = 1.0;
+    scene->table.material.diffuse.green = 1.0;
+    scene->table.material.diffuse.blue = 1.0;
+
+    scene->table.material.specular.red = 0.0;
+    scene->table.material.specular.green = 0.0;
+    scene->table.material.specular.blue = 0.0;
+
+    scene->table.material.shininess = 0.0;
+}
+
+void init_dresser(Scene* scene)
+{
+    load_model(&(scene->dresser.model), "models/dresser.obj");
+    scene->dresser.texture_id = load_texture("textures/wood.jpg"); 
+
+    scene->dresser.material.ambient.red = 1.0;
+    scene->dresser.material.ambient.green = 1.0;
+    scene->dresser.material.ambient.blue = 1.0;
+
+    scene->dresser.material.diffuse.red = 1.0;
+    scene->dresser.material.diffuse.green = 1.0;
+    scene->dresser.material.diffuse.blue = 1.0;
+
+    scene->dresser.material.specular.red = 0.0;
+    scene->dresser.material.specular.green = 0.0;
+    scene->dresser.material.specular.blue = 0.0;
+
+    scene->dresser.material.shininess = 0.0;
+}
+
 void init_scene(Scene* scene)
 {
     scene->sun_brightness = 0.0;
@@ -264,10 +346,16 @@ void init_scene(Scene* scene)
     init_house3(scene);
     init_barrier(scene);
     init_car(scene);
+    init_rocking_chair(scene);
+    init_chair(scene);
+    init_table(scene);
+    init_dresser(scene);
 }
 
 void update_scene(Scene* scene, Camera* camera, double time)
 {
+
+    /* CAR */
     float x, n, i, j, r;
     float alpha, beta, a, b, c;
     float speed, around;
@@ -333,7 +421,8 @@ void update_scene(Scene* scene, Camera* camera, double time)
         scene->car.material_car_lamp.ambient.blue = 0.0f;
     }
 
-    /* Sun brightness */
+
+    /* SUN */
     scene->sun_brightness += scene->sun_brightness_inc * time;
 
     if(scene->sun_brightness > 255.0){
@@ -342,9 +431,20 @@ void update_scene(Scene* scene, Camera* camera, double time)
     if(scene->sun_brightness < 0.0){
         scene->sun_brightness = 0.0;
     }
+
+    /* CHAIR */
+
+    scene->rocking_chair.furniture_rocking += time * scene->rocking_chair.furniture_rocking_direction * 2;
+
+    if(scene->rocking_chair.furniture_rocking >= 10.0){
+        scene->rocking_chair.furniture_rocking_direction = -1.0;
+    }else if(scene->rocking_chair.furniture_rocking <= -10.0){
+        scene->rocking_chair.furniture_rocking_direction = 1.0;
+    }
+
 }
 
-void set_lighting(Scene* scene)
+void set_lighting(const Scene* scene)
 {
     float b;
     b = scene->sun_brightness / 255.0;
@@ -815,6 +915,23 @@ void draw_mainhouse(const Scene* scene, float x, float y, float z)
     draw_model(&(scene->house));
     glPopMatrix();
 
+
+    /* TABLE */
+    draw_table(scene, 0.0, 0.0, 0.2, 0.0);
+
+    /* ROCKINGCHAIR */
+    draw_rocking_chair(scene, 55.0, -55.0, 18.0, -135);
+
+    /* CHAIRS */
+    draw_chair(scene, -0.6, 0.0, 0.4, 0.0);
+    draw_chair(scene, 0.0, -0.6, 0.4, 90.0);
+    draw_chair(scene, 0.0, 0.6, 0.4, -90.0);
+    draw_chair(scene, 0.6, 0.0, 0.4, 180.0);
+
+    /* DRESSER */
+    draw_dresser(scene, -3.4, 0.0, 0.4, 0.0);
+
+
     /*FENCES*/
     draw_fence(&(scene->house.fence));
 
@@ -823,8 +940,6 @@ void draw_mainhouse(const Scene* scene, float x, float y, float z)
 
 void draw_house2(const Scene* scene,  float x, float y, float z)
 {
-    int i;
-
     glPushMatrix();
     glTranslatef(x, y, z);
 
@@ -1097,6 +1212,77 @@ void draw_barrier(const Scene* scene)
 
 }
 
+void draw_rocking_chair(const Scene* scene,  float x, float y, float z, float degree)
+{
+    float rotation = scene->rocking_chair.furniture_rocking;
+
+    glPushMatrix();
+    glScalef(0.05, 0.05, 0.05);
+    glTranslatef(x, y, z);
+
+    glPushMatrix();
+
+    glRotatef(degree, 0.0, 0.0, 1.0);
+    glRotatef(rotation, 1.0, 0.0, 0.0);
+    printf("%f\n", rotation);
+    glBindTexture(GL_TEXTURE_2D, scene->rocking_chair.texture_id);
+    draw_model(&(scene->rocking_chair.model));
+
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
+void draw_chair(const Scene* scene,  float x, float y, float z, float degree)
+{
+    glPushMatrix();
+    glTranslatef(x, y, z);
+
+    glPushMatrix();
+
+    glRotatef(degree, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->chair.texture_id);
+    draw_model(&(scene->chair.model));
+
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
+void draw_table(const Scene* scene,  float x, float y, float z, float degree)
+{
+    glPushMatrix();
+    glScalef(2.0, 2.0, 2.0);
+    glTranslatef(x, y, z);
+
+    glPushMatrix();
+
+    glRotatef(degree, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->table.texture_id);
+    draw_model(&(scene->table.model));
+
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
+void draw_dresser(const Scene* scene,  float x, float y, float z, float degree)
+{
+    glPushMatrix();
+    glScalef(1.0, 1.0, 1.0);
+    glTranslatef(x, y, z);
+
+    glPushMatrix();
+
+    glRotatef(degree, 0.0, 0.0, 1.0);
+    glBindTexture(GL_TEXTURE_2D, scene->dresser.texture_id);
+    draw_model(&(scene->dresser.model));
+
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
 void draw_thecity(const Scene* scene)
 {
     /*GRASS*/
@@ -1129,8 +1315,8 @@ void draw_thecity(const Scene* scene)
     draw_barrier(scene);
 
     /*TREES*/
-    draw_tree(scene, -20.0, 20.0, 0.0);
-
+    //draw_tree(scene, -20.0, 20.0, 0.0);
+    
 }
 
 void draw_scene(const Scene* scene)
@@ -1146,6 +1332,7 @@ void draw_scene(const Scene* scene)
     glTranslatef(17.0, 20.0, 0.0);
     draw_car(scene);
     glPopMatrix();
+
 
 }
 
