@@ -254,6 +254,8 @@ void init_car(Scene* scene)
 
 void init_scene(Scene* scene)
 {
+    scene->sun_brightness = 0.0;
+    
     init_soil(scene);
     init_tree(scene);
     init_road(scene);
@@ -330,19 +332,37 @@ void update_scene(Scene* scene, Camera* camera, double time)
         scene->car.material_car_lamp.ambient.green = 0.0f;
         scene->car.material_car_lamp.ambient.blue = 0.0f;
     }
+
+    /* Sun brightness */
+    scene->sun_brightness += scene->sun_brightness_inc * time;
+
+    if(scene->sun_brightness > 255.0){
+        scene->sun_brightness = 255.0;
+    }
+    if(scene->sun_brightness < 0.0){
+        scene->sun_brightness = 0.0;
+    }
 }
 
-void set_lighting()
+void set_lighting(Scene* scene)
 {
-    float ambient_light[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    float diffuse_light[] = { 0.0f, 0.0f, 0.0, 1.0f };
-    float specular_light[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float b;
+    b = scene->sun_brightness / 255.0;
+
+    float ambient_light[] = { b, b, b, b };
+    float diffuse_light[] = { b, b, b, b };
+    float specular_light[] = { b, b, b, b };
     float position[] = { 0.0f, 0.0f, 10.0f, 1.0f };
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_light);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular_light);
     glLightfv(GL_LIGHT0, GL_POSITION, position);
+}
+
+void set_sun_brightness_inc(Scene* scene, float b)
+{
+    scene->sun_brightness_inc = b;
 }
 
 void set_material(const Material* material)
@@ -761,6 +781,7 @@ void draw_tree(const Scene* scene, float x, float y, float z)
     glPushMatrix();
     glBindTexture(GL_TEXTURE_2D, 0);
     glTranslatef(x, y, z);
+    glScalef(0.5, 0.5, 0.5);
 
     /* TRUNK */
     glPushMatrix();
@@ -1109,13 +1130,12 @@ void draw_thecity(const Scene* scene)
 
     /*TREES*/
     draw_tree(scene, -20.0, 20.0, 0.0);
-    draw_tree(scene, 20.0, 20.0, 0.0);
 
 }
 
 void draw_scene(const Scene* scene)
 {
-    set_lighting();
+    set_lighting(scene);
     draw_origin();
     
     /* The city */

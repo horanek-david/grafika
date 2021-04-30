@@ -66,6 +66,9 @@ typedef struct Scene
     House house2;
     House house3;
     Railing barrier;
+    float sun_brightness;
+    float sun_brightness_inc;
+
 } Scene;
 
 /**
@@ -126,7 +129,12 @@ void update_scene(Scene* scene, Camera* camera, double time);
 /**
  * Set the lighting of the scene.
  */
-void set_lighting();
+void set_lighting(Scene* scene);
+
+/**
+ * Set the sun brightness
+ */
+void set_sun_brightness_inc(Scene* scene, float b);
 
 /**
  * Set the current material.

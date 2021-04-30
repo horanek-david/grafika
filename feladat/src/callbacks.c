@@ -93,6 +93,20 @@ void keyboard(unsigned char key, int x, int y)
             is_preview_visible = TRUE;
         }
         break;
+    case ' ':
+        if ((&scene)->car.is_light_on) {
+            (&scene)->car.is_light_on = FALSE;
+        }
+        else {
+            (&scene)->car.is_light_on = TRUE;
+        }
+        break;
+    case '+':
+        set_sun_brightness_inc(&scene, 20);
+        break;
+    case '-':
+        set_sun_brightness_inc(&scene, -20);
+        break;
     }
 
     glutPostRedisplay();
@@ -112,6 +126,10 @@ void keyboard_up(unsigned char key, int x, int y)
     case 'q':
     case 'e':
         set_camera_lift_speed(&camera, 0.0);
+        break;
+    case '+':
+    case '-':
+        set_sun_brightness_inc(&scene, 0.0);
         break;
     }
 
