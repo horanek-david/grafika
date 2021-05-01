@@ -334,6 +334,48 @@ void init_dresser(Scene* scene)
     scene->dresser.material.shininess = 0.0;
 }
 
+void init_streetlight(Scene* scene)
+{
+    load_model(&(scene->lamp.streetlight_pole), "models/streetlight_pole.obj");
+    load_model(&(scene->lamp.streetlight_glass), "models/streetlight_glass.obj");
+
+    /* POLE */
+    scene->lamp.material_streetlight_pole.ambient.red = 0.25f;
+    scene->lamp.material_streetlight_pole.ambient.green = 0.148f;
+    scene->lamp.material_streetlight_pole.ambient.blue = 0.06475f;
+    scene->lamp.material_streetlight_pole.ambient.alpha = 1.0f;
+
+    scene->lamp.material_streetlight_pole.diffuse.red = 0.4f;
+    scene->lamp.material_streetlight_pole.diffuse.green = 0.2368f;
+    scene->lamp.material_streetlight_pole.diffuse.blue = 0.1036f;
+    scene->lamp.material_streetlight_pole.diffuse.alpha = 1.0f;
+
+    scene->lamp.material_streetlight_pole.specular.red = 0.774597f;
+    scene->lamp.material_streetlight_pole.specular.green = 0.458561f;
+    scene->lamp.material_streetlight_pole.specular.blue = 0.200621f;
+    scene->lamp.material_streetlight_pole.specular.alpha = 1.0f;
+
+    scene->lamp.material_streetlight_pole.shininess = 76.8f;
+
+    /* GLASS */
+    scene->lamp.material_streetlight_glass.ambient.red = 0.2f;
+    scene->lamp.material_streetlight_glass.ambient.green = 0.2f;
+    scene->lamp.material_streetlight_glass.ambient.blue = 0.2f;
+    scene->lamp.material_streetlight_glass.ambient.alpha = 0.2f;
+
+    scene->lamp.material_streetlight_glass.diffuse.red = 0.2f;
+    scene->lamp.material_streetlight_glass.diffuse.green = 0.2f;
+    scene->lamp.material_streetlight_glass.diffuse.blue = 0.2f;
+    scene->lamp.material_streetlight_glass.diffuse.alpha = 0.2f;
+
+    scene->lamp.material_streetlight_glass.specular.red = 0.2f;
+    scene->lamp.material_streetlight_glass.specular.green = 0.2f;
+    scene->lamp.material_streetlight_glass.specular.blue = 0.2f;
+    scene->lamp.material_streetlight_glass.specular.alpha = 0.2f;
+
+    scene->lamp.material_streetlight_glass.shininess = 0.0;
+}
+
 void init_scene(Scene* scene)
 {
     scene->sun_brightness = 0.0;
@@ -350,6 +392,7 @@ void init_scene(Scene* scene)
     init_chair(scene);
     init_table(scene);
     init_dresser(scene);
+    init_streetlight(scene);
 }
 
 void update_scene(Scene* scene, Camera* camera, double time)
@@ -416,9 +459,9 @@ void update_scene(Scene* scene, Camera* camera, double time)
         scene->car.material_car_lamp.ambient.blue = 1.0f;
     }
     else{
-        scene->car.material_car_lamp.ambient.red = 0.0f;
-        scene->car.material_car_lamp.ambient.green = 0.0f;
-        scene->car.material_car_lamp.ambient.blue = 0.0f;
+        scene->car.material_car_lamp.ambient.red = 0.79f;
+        scene->car.material_car_lamp.ambient.green = 0.7795f;
+        scene->car.material_car_lamp.ambient.blue = 0.474f;
     }
 
 
@@ -432,8 +475,26 @@ void update_scene(Scene* scene, Camera* camera, double time)
         scene->sun_brightness = 0.0;
     }
 
-    /* CHAIR */
+    if(scene->sun_brightness > 30.0){
+        glDisable(GL_LIGHT4);
+        glDisable(GL_LIGHT5);
+        glDisable(GL_LIGHT6);
+        glDisable(GL_LIGHT7);
+        scene->lamp.material_streetlight_glass.ambient.red = 0.79f;
+        scene->lamp.material_streetlight_glass.ambient.green = 0.7795f;
+        scene->lamp.material_streetlight_glass.ambient.blue = 0.474f;
+    }
+    if(scene->sun_brightness < 30.0){
+        glEnable(GL_LIGHT4);
+        glEnable(GL_LIGHT5);
+        glEnable(GL_LIGHT6);
+        glEnable(GL_LIGHT7);
+        scene->lamp.material_streetlight_glass.ambient.red = 1.0f;
+        scene->lamp.material_streetlight_glass.ambient.green = 1.0f;
+        scene->lamp.material_streetlight_glass.ambient.blue = 1.0f;
+    }
 
+    /* CHAIR */
     scene->rocking_chair.furniture_rocking += time * scene->rocking_chair.furniture_rocking_direction * 2;
 
     if(scene->rocking_chair.furniture_rocking >= 10.0){
@@ -532,6 +593,27 @@ void set_car_lamp_r(float x, float y, float z)
     glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 90.0);
     glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, spot_direction);
     glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 2.0); 
+}
+
+void set_streetlight(GLenum light)
+{
+    float ambient_light[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float diffuse_light[] = { 1.0f, 1.0f, 1.0, 1.0f };
+    float specular_light[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float position[] = { 0.0, 0.0, 0.0, 1.0f };
+    float spot_direction[] = { 0.0, 0.0, -1.0};
+
+    glLightfv(light, GL_AMBIENT, ambient_light);
+    glLightfv(light, GL_DIFFUSE, diffuse_light);
+    glLightfv(light, GL_SPECULAR, specular_light);
+    glLightfv(light, GL_POSITION, position);
+    glLightf(light, GL_CONSTANT_ATTENUATION, 1.5);
+    glLightf(light, GL_LINEAR_ATTENUATION, 0.5);
+    glLightf(light, GL_QUADRATIC_ATTENUATION, 0.2);
+
+    glLightf(light, GL_SPOT_CUTOFF, 60.0);
+    glLightfv(light, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(light, GL_SPOT_EXPONENT, 0.50);
 }
 
 void set_car_speed(Scene* scene, float x)
@@ -920,7 +1002,7 @@ void draw_mainhouse(const Scene* scene, float x, float y, float z)
     draw_table(scene, 0.0, 0.0, 0.2, 0.0);
 
     /* ROCKINGCHAIR */
-    draw_rocking_chair(scene, 55.0, -55.0, 18.0, -135);
+    draw_rocking_chair(scene, 51.0, -51.0, 9.5, -135);
 
     /* CHAIRS */
     draw_chair(scene, -0.6, 0.0, 0.4, 0.0);
@@ -1224,7 +1306,6 @@ void draw_rocking_chair(const Scene* scene,  float x, float y, float z, float de
 
     glRotatef(degree, 0.0, 0.0, 1.0);
     glRotatef(rotation, 1.0, 0.0, 0.0);
-    printf("%f\n", rotation);
     glBindTexture(GL_TEXTURE_2D, scene->rocking_chair.texture_id);
     draw_model(&(scene->rocking_chair.model));
 
@@ -1283,6 +1364,42 @@ void draw_dresser(const Scene* scene,  float x, float y, float z, float degree)
     glPopMatrix();
 }
 
+void draw_streetlight(const Scene* scene, GLenum light, float x, float y, float z, float degree)
+{
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glScalef(0.2, 0.2, 0.2);
+    glRotatef(degree, 0.0, 0.0, 1.0);
+
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
+    set_material(&(scene->lamp.material_streetlight_pole));
+    draw_model(&(scene->lamp.streetlight_pole));
+
+    glPushMatrix();
+        glDepthMask(GL_FALSE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+        set_material(&(scene->lamp.material_streetlight_glass));
+        draw_model(&(scene->lamp.streetlight_glass));
+
+        glDisable(GL_BLEND);
+        glDepthMask(GL_TRUE);
+    glPopMatrix();
+
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(0.0, 4.8, 17.0);
+    set_streetlight(light);
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
 void draw_thecity(const Scene* scene)
 {
     /*GRASS*/
@@ -1316,6 +1433,12 @@ void draw_thecity(const Scene* scene)
 
     /*TREES*/
     //draw_tree(scene, -20.0, 20.0, 0.0);
+
+    /*STREETLIGHTS*/
+    draw_streetlight(scene, GL_LIGHT4, -20.0, 4.5, 0.0, 0.0);
+    draw_streetlight(scene, GL_LIGHT5, 15.0, 4.5, 0.0, 0.0);
+    draw_streetlight(scene, GL_LIGHT6, 24.0, 15.5, 0.0, 220.0);
+    draw_streetlight(scene, GL_LIGHT7, -2.0, 15.5, 0.0, 180.0);
     
 }
 

@@ -65,6 +65,15 @@ typedef struct Furnitures
     float furniture_rocking_direction;
 } Furnitures;
 
+typedef struct Streetlight
+{
+    Model streetlight_pole;
+    Model streetlight_glass;
+    Material material_streetlight_pole;
+    Material material_streetlight_glass;
+} Streetlight;
+
+
 typedef struct Scene
 {
     Car car;
@@ -78,6 +87,7 @@ typedef struct Scene
     Furnitures chair;
     Furnitures table;
     Furnitures dresser;
+    Streetlight lamp;
     Railing barrier;
     float sun_brightness;
     float sun_brightness_inc;
@@ -130,6 +140,36 @@ void init_barrier(Scene* scene);
 void init_car(Scene* scene);
 
 /**
+ * Initialize a chair by loading models.
+ */
+void init_rocking_chair(Scene* scene);
+
+/**
+ * Initialize a chair by loading models.
+ */
+void init_chair(Scene* scene);
+
+/**
+ * Initialize a table by loading models.
+ */
+void init_table(Scene* scene);
+
+/**
+ * Initialize a dresser by loading models.
+ */
+void init_dresser(Scene* scene);
+
+/**
+ * Initialize a streetlight by loading models.
+ */
+void draw_streetlight(const Scene* scene, GLenum light, float x, float y, float z, float degree);
+
+/**
+ * Initialize a streetlight by loading models.
+ */
+void init_streetlight(Scene* scene);
+
+/**
  * Initialize the scene by loading models.
  */
 void init_scene(Scene* scene);
@@ -163,6 +203,11 @@ void set_car_lamp_l(float x, float y, float z);
  * Set the lighting of the right car lamp.
  */
 void set_car_lamp_r(float x, float y, float z);
+
+/**
+ * Set the lighting of street lamp.
+ */
+void set_streetlight(GLenum light);
 
 /**
  * Set car speed
