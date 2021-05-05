@@ -419,6 +419,18 @@ void update_scene(Scene* scene, Camera* camera, double time)
         scene->car.around_tire = -40;
 
 
+    /* The tire will slowly rotate back to the original spot */
+    if(speed == 0.0)
+    {
+        if(scene->car.around_tire > 0)
+        {
+            scene->car.around_tire -= 0.5;
+        }
+        else if(scene->car.around_tire < 0)
+        {
+            scene->car.around_tire += 0.5;
+        }
+    }
 
     /* Wheel rotation if the car is moving forward */
     r = 0.8;    /* Wheel radius */
@@ -445,6 +457,54 @@ void update_scene(Scene* scene, Camera* camera, double time)
 
     scene->car.position.x += a;                 
     scene->car.position.y += b;
+
+    /* Car block inside*/
+    if(scene->car.position.x > 24.04){
+        scene->car.position.x = 24.04;
+    }else if(scene->car.position.x < -38.58){
+        scene->car.position.x = -38.58;
+    }
+
+    if(scene->car.position.y > 28.60){
+        scene->car.position.y = 28.60;
+    }else if(scene->car.position.y < -34.64){
+        scene->car.position.y = -34.64;
+    }
+
+    /* The site where there are several houses*/
+    if((scene->car.position.x < 18.0 && scene->car.position.x > -34.0 && scene->car.position.y < -4.5 && scene->car.position.y > -5.5 )){ 
+        scene->car.position.y = -4.5; /* left side */
+    }
+    else if((scene->car.position.x < 18.0 && scene->car.position.x > -34.0 && scene->car.position.y < -29.3 && scene->car.position.y > -31.3 )){ 
+        scene->car.position.y = -31.3; /* right side */
+    }
+    else if((scene->car.position.x < 20.5 && scene->car.position.x > 18.5 && scene->car.position.y < -4.5 && scene->car.position.y > -31.3 )){ 
+        scene->car.position.x = 20.5; /* upper side */
+    }
+    else if((scene->car.position.x < -34.5 && scene->car.position.x > -36.5 && scene->car.position.y < -4.5 && scene->car.position.y > -31.3 )){ 
+        scene->car.position.x = -36.5; /* lower side */
+    }
+    /* The site where there are several houses*/
+    else if((scene->car.position.x < 18.0 && scene->car.position.x > -34.0 && scene->car.position.y < 25.5 && scene->car.position.y > 23.5 )){ 
+        scene->car.position.y = 25.5; /* left side */
+    }
+    else if((scene->car.position.x < 18.0 && scene->car.position.x > -34.0 && scene->car.position.y < 1.5 && scene->car.position.y > -1.5 )){ 
+        scene->car.position.y = -1.5; /* right side */
+    }
+    else if((scene->car.position.x < 20.5 && scene->car.position.x > 18.5 && scene->car.position.y < 25.5 && scene->car.position.y > -1.5 )){ 
+        scene->car.position.x = 20.5; /* upper side */
+    }
+    else if((scene->car.position.x < -34.5 && scene->car.position.x > -36.5 && scene->car.position.y < 25.5 && scene->car.position.y > -1.5 )){ 
+        scene->car.position.x = -36.5; /* lower side */
+    }
+    
+
+    printf("x:%f , y:%f\n", scene->car.position.x, scene->car.position.y);
+
+    
+
+    
+
 
     /* The wheel will only rotate if the car is moving */
     if(scene->car.speed.x != 0)
@@ -1445,14 +1505,15 @@ void draw_thecity(const Scene* scene)
 void draw_scene(const Scene* scene)
 {
     set_lighting(scene);
-    draw_origin();
+    /* draw_origin(); */
     
+
     /* The city */
     draw_thecity(scene);
 
     /* The car */
     glPushMatrix();
-    glTranslatef(17.0, 20.0, 0.0);
+    glTranslatef(7.0, 13.0, 0.0);
     draw_car(scene);
     glPopMatrix();
 

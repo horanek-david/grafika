@@ -112,3 +112,113 @@ void show_texture_preview()
     glEnable(GL_DEPTH_TEST);
 }
 
+void show_menu_preview()
+{
+	char str[100];
+    char str2[100];
+    char str3[100];
+    char str4[100];
+    char str5[100];
+    char str6[100];
+    char str7[100];
+    char str8[100];
+    char str9[100];
+    char str10[100];
+    char str11[100];
+    char str12[100];
+    char str13[100];
+    char str14[100];
+
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_COLOR_MATERIAL);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glColor4f(0.0, 0.0, 0.0, 0.7);
+
+    glDepthMask(GL_FALSE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+    glBegin(GL_QUADS);
+    glVertex3f(-1.5, 1.0, -3.0);
+    glVertex3f(1.5, 1.0, -3.0);
+    glVertex3f(1.5, -1.0, -3.0);
+    glVertex3f(-1.5, -1.0, -3.0);
+    glEnd();
+
+    glDisable(GL_BLEND);
+    glDepthMask(GL_TRUE);
+
+
+    sprintf(str, "The program functions");
+    sprintf(str2, "Camera movement: 'W'-Forward");
+    sprintf(str3, "'S'-Backward");
+    sprintf(str4, "'A'-Left");
+    sprintf(str5, "'D'-Right"); 
+    sprintf(str6, "'Q'-Up"); 
+    sprintf(str7, "'E'-Down");
+    sprintf(str8, "Car movement: 'Up Arrow'-Forward");
+    sprintf(str9, "'Down Arrow'-Backward");
+	sprintf(str10, "'Left Arrow'-Left");
+    sprintf(str11, "'Right Arrow'-Right");
+    sprintf(str12, "Car lamp: Turn on/off with 'Space' ");
+    sprintf(str13, "Sun brightness: Turn up with '+' and turn down with '-'");
+
+
+	glColor3f(1.0, 1.0, 1.0);
+	glRasterPos3f(-0.6, 0.7, -3);
+	draw_string(GLUT_BITMAP_HELVETICA_18, &str);
+
+    glRasterPos3f(-1.45, 0.5, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str2);
+    
+    glRasterPos3f(-0.8, 0.35, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str3);
+
+    glRasterPos3f(-0.8, 0.2, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str4);
+
+    glRasterPos3f(-0.8, 0.05, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str5);
+
+    glRasterPos3f(-0.8, -0.1, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str6);
+
+    glRasterPos3f(-0.8, -0.25, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str7);
+
+    glRasterPos3f(-0.2, 0.5, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str8);
+
+    glRasterPos3f(0.3, 0.35, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str9);
+
+    glRasterPos3f(0.3, 0.2, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str10);
+
+    glRasterPos3f(0.3, 0.05, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str11);
+
+    glRasterPos3f(-1.45, -0.6, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str12);
+
+    glRasterPos3f(-1.45, -0.8, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str13);
+
+    glDisable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_DEPTH_TEST);
+}
+
+void draw_string(void *font, char* str[100])
+{
+    char* c;
+
+    for (c = str; *c != '\0'; c++) {
+		glutBitmapCharacter(font, *c);  
+	}
+}

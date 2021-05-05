@@ -53,4 +53,14 @@ void set_camera_side_speed(Camera* camera, double speed);
  */
 void set_camera_lift_speed(Camera* camera, double speed);
 
+/**
+ * This will show us the menu of this program to help us.
+ */
+void show_menu_preview();
+
+/**
+ * Write out string.
+ */
+void draw_string(void *font, char* str[50]);
+
 #endif /* CAMERA_H */

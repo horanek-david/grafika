@@ -19,7 +19,7 @@ void display()
     glPopMatrix();
 
     if (is_preview_visible) {
-        show_texture_preview();
+        show_menu_preview();
     }
 
     glutSwapBuffers();
@@ -85,14 +85,6 @@ void keyboard(unsigned char key, int x, int y)
     case 'e':
         set_camera_lift_speed(&camera, -1);
         break;
-    case 'p':
-        if (is_preview_visible) {
-            is_preview_visible = FALSE;
-        }
-        else {
-            is_preview_visible = TRUE;
-        }
-        break;
     case ' ':
         if ((&scene)->car.is_light_on) {
             (&scene)->car.is_light_on = FALSE;
@@ -151,7 +143,16 @@ void specialkey(int key, int x, int y)
     case GLUT_KEY_RIGHT:
         set_car_side_speed(&scene, -1);
         break;
+    case GLUT_KEY_F1:
+        if (is_preview_visible) {
+            is_preview_visible = FALSE;
+        }
+        else {
+            is_preview_visible = TRUE;
+        }
+        break;
     }
+    
 
     glutPostRedisplay();
 }
