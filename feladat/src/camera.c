@@ -167,7 +167,7 @@ void show_menu_preview()
     sprintf(str11, "'Right Arrow'-Right");
     sprintf(str12, "Car lamp: Turn on/off with 'Space' ");
     sprintf(str13, "Sun brightness: Turn up with '+' and turn down with '-'");
-
+    sprintf(str14, "Fog: Turn on/off the fog with F2.");
 
 	glColor3f(1.0, 1.0, 1.0);
 	glRasterPos3f(-0.6, 0.7, -3);
@@ -203,11 +203,14 @@ void show_menu_preview()
     glRasterPos3f(0.3, 0.05, -3);
     draw_string(GLUT_BITMAP_HELVETICA_12, &str11);
 
-    glRasterPos3f(-1.45, -0.6, -3);
+    glRasterPos3f(-1.45, -0.5, -3);
     draw_string(GLUT_BITMAP_HELVETICA_12, &str12);
 
-    glRasterPos3f(-1.45, -0.8, -3);
+    glRasterPos3f(-1.45, -0.7, -3);
     draw_string(GLUT_BITMAP_HELVETICA_12, &str13);
+
+    glRasterPos3f(-1.45, -0.9, -3);
+    draw_string(GLUT_BITMAP_HELVETICA_12, &str14);
 
     glDisable(GL_COLOR_MATERIAL);
     glEnable(GL_LIGHTING);

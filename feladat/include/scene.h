@@ -91,7 +91,7 @@ typedef struct Scene
     Railing barrier;
     float sun_brightness;
     float sun_brightness_inc;
-
+    int is_fog_visible;
 } Scene;
 
 /**
@@ -308,6 +308,11 @@ void draw_dresser(const Scene* scene,  float x, float y, float z, float degree);
  * Draw the city.
  */
 void draw_thecity(const Scene* scene);
+
+/**
+ * Draw fog.
+ */
+void draw_fog(const Scene* scene);
 
 /**
  * Draw the scene objects.

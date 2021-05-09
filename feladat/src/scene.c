@@ -1500,6 +1500,27 @@ void draw_thecity(const Scene* scene)
     
 }
 
+void draw_fog(const Scene* scene)
+{
+    if(scene->is_fog_visible){
+        glPushMatrix();
+
+        GLfloat fogColor[4] = {0.3f, 0.3f, 0.3f, 1.0f}; /* The color of the fog */
+
+        glFogi(GL_FOG_MODE, GL_LINEAR);     /* Fog mode */
+        glFogfv(GL_FOG_COLOR, fogColor);    /* Set the color of the fog */
+        glFogf(GL_FOG_DENSITY, 0.8f);       /* Set the dense of the fog */
+        glHint(GL_FOG_HINT, GL_NICEST);     /* Fog hint value */
+        glFogf(GL_FOG_START, 10.0f);        /* Set the start of the fog depth */
+        glFogf(GL_FOG_END, 20.0f);          /* Set the end of the fog depth */
+        glEnable(GL_FOG);                   /* Enable the fog in the program */
+
+        glPopMatrix();
+    }else{
+        glDisable(GL_FOG);                  /* Disable the fog in the program */
+    }
+}
+
 void draw_scene(const Scene* scene)
 {
     set_lighting(scene);
@@ -1515,6 +1536,8 @@ void draw_scene(const Scene* scene)
     draw_car(scene);
     glPopMatrix();
 
+    /* The fog */
+    draw_fog(scene);
 
 }
 

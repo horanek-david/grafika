@@ -151,6 +151,14 @@ void specialkey(int key, int x, int y)
             is_preview_visible = TRUE;
         }
         break;
+    case GLUT_KEY_F2:
+        if ((&scene)->is_fog_visible) {
+            (&scene)->is_fog_visible = FALSE;
+        }
+        else {
+            (&scene)->is_fog_visible = TRUE;
+        }
+        break;
     }
     
 
