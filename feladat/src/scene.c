@@ -11,17 +11,17 @@ void init_soil(Scene* scene)
 {
     scene->soil.texture_id = load_texture("textures/grass.jpg"); 
 
-    scene->soil.material.ambient.red = 1.0;
-    scene->soil.material.ambient.green = 1.0;
-    scene->soil.material.ambient.blue = 1.0;
+    scene->soil.material.ambient.red = 0.2;
+    scene->soil.material.ambient.green = 0.2;
+    scene->soil.material.ambient.blue = 0.2;
 
     scene->soil.material.diffuse.red = 1.0;
     scene->soil.material.diffuse.green = 1.0;
     scene->soil.material.diffuse.blue = 1.0;
 
-    scene->soil.material.specular.red = 0.0;
-    scene->soil.material.specular.green = 0.0;
-    scene->soil.material.specular.blue = 0.0;
+    scene->soil.material.specular.red = 1.0;
+    scene->soil.material.specular.green = 1.0;
+    scene->soil.material.specular.blue = 1.0;
 
     scene->soil.material.shininess = 0.0;
 }
@@ -72,17 +72,17 @@ void init_road(Scene* scene)
 {
     scene->road.texture_id = load_texture("textures/road.jpg"); 
 
-    scene->road.material.ambient.red = 1.0;
-    scene->road.material.ambient.green = 1.0;
-    scene->road.material.ambient.blue = 1.0;
+    scene->road.material.ambient.red = 0.2;
+    scene->road.material.ambient.green = 0.2;
+    scene->road.material.ambient.blue = 0.2;
 
     scene->road.material.diffuse.red = 1.0;
     scene->road.material.diffuse.green = 1.0;
     scene->road.material.diffuse.blue = 1.0;
 
-    scene->road.material.specular.red = 0.0;
-    scene->road.material.specular.green = 0.0;
-    scene->road.material.specular.blue = 0.0;
+    scene->road.material.specular.red = 1.0;
+    scene->road.material.specular.green = 1.0;
+    scene->road.material.specular.blue = 1.0;
 
     scene->road.material.shininess = 0.0;
 }
@@ -92,17 +92,17 @@ void init_mainhouse(Scene* scene)
     load_model(&(scene->house.model), "models/mainhouse.obj");
     scene->house.texture_id = load_texture("textures/mainhouse.png"); 
 
-    scene->house.material.ambient.red = 1.0;
-    scene->house.material.ambient.green = 1.0;
-    scene->house.material.ambient.blue = 1.0;
+    scene->house.material.ambient.red = 0.2;
+    scene->house.material.ambient.green = 0.2;
+    scene->house.material.ambient.blue = 0.2;
 
     scene->house.material.diffuse.red = 1.0;
     scene->house.material.diffuse.green = 1.0;
     scene->house.material.diffuse.blue = 1.0;
 
-    scene->house.material.specular.red = 0.0;
-    scene->house.material.specular.green = 0.0;
-    scene->house.material.specular.blue = 0.0;
+    scene->house.material.specular.red = 1.0;
+    scene->house.material.specular.green = 1.0;
+    scene->house.material.specular.blue = 1.0;
 
     scene->house.material.shininess = 0.0;
     
@@ -114,17 +114,17 @@ void init_house2(Scene* scene)
     load_model(&(scene->house2.model), "models/house2.obj");
     scene->house2.texture_id = load_texture("textures/house2.jpg"); 
 
-    scene->house2.material.ambient.red = 1.0;
-    scene->house2.material.ambient.green = 1.0;
-    scene->house2.material.ambient.blue = 1.0;
+    scene->house2.material.ambient.red = 0.2;
+    scene->house2.material.ambient.green = 0.2;
+    scene->house2.material.ambient.blue = 0.2;
 
     scene->house2.material.diffuse.red = 1.0;
     scene->house2.material.diffuse.green = 1.0;
     scene->house2.material.diffuse.blue = 1.0;
 
-    scene->house2.material.specular.red = 0.0;
-    scene->house2.material.specular.green = 0.0;
-    scene->house2.material.specular.blue = 0.0;
+    scene->house2.material.specular.red = 1.0;
+    scene->house2.material.specular.green = 1.0;
+    scene->house2.material.specular.blue = 1.0;
 
     scene->house2.material.shininess = 0.0;
     
@@ -136,17 +136,17 @@ void init_house3(Scene* scene)
     load_model(&(scene->house3.model), "models/house3.obj");
     scene->house3.texture_id = load_texture("textures/house3.jpg"); 
 
-    scene->house3.material.ambient.red = 1.0;
-    scene->house3.material.ambient.green = 1.0;
-    scene->house3.material.ambient.blue = 1.0;
+    scene->house3.material.ambient.red = 0.2;
+    scene->house3.material.ambient.green = 0.2;
+    scene->house3.material.ambient.blue = 0.2;
 
     scene->house3.material.diffuse.red = 1.0;
     scene->house3.material.diffuse.green = 1.0;
     scene->house3.material.diffuse.blue = 1.0;
 
-    scene->house3.material.specular.red = 0.0;
-    scene->house3.material.specular.green = 0.0;
-    scene->house3.material.specular.blue = 0.0;
+    scene->house3.material.specular.red = 1.0;
+    scene->house3.material.specular.green = 1.0;
+    scene->house3.material.specular.blue = 1.0;
 
     scene->house3.material.shininess = 0.0;
     
@@ -158,17 +158,17 @@ void init_fence(Railing* fence)
     load_model(&(fence->model), "models/fence.obj");
     fence->texture_id = load_texture("textures/fence.png"); 
 
-    fence->material.ambient.red = 1.0;
-    fence->material.ambient.green = 1.0;
-    fence->material.ambient.blue = 1.0;
+    fence->material.ambient.red = 0.2;
+    fence->material.ambient.green = 0.2;
+    fence->material.ambient.blue = 0.2;
 
     fence->material.diffuse.red = 1.0;
     fence->material.diffuse.green = 1.0;
     fence->material.diffuse.blue = 1.0;
 
-    fence->material.specular.red = 0.0;
-    fence->material.specular.green = 0.0;
-    fence->material.specular.blue = 0.0;
+    fence->material.specular.red = 1.0;
+    fence->material.specular.green = 1.0;
+    fence->material.specular.blue = 1.0;
 
     fence->material.shininess = 0.0;
 }
@@ -178,17 +178,17 @@ void init_barrier(Scene* scene)
     load_model(&(scene->barrier.model), "models/barrier.obj");
     scene->barrier.texture_id = load_texture("textures/barrier.png"); 
 
-    scene->barrier.material.ambient.red = 1.0;
-    scene->barrier.material.ambient.green = 1.0;
-    scene->barrier.material.ambient.blue = 1.0;
+    scene->barrier.material.ambient.red = 0.2;
+    scene->barrier.material.ambient.green = 0.2;
+    scene->barrier.material.ambient.blue = 0.2;
 
     scene->barrier.material.diffuse.red = 1.0;
     scene->barrier.material.diffuse.green = 1.0;
     scene->barrier.material.diffuse.blue = 1.0;
 
-    scene->barrier.material.specular.red = 0.0;
-    scene->barrier.material.specular.green = 0.0;
-    scene->barrier.material.specular.blue = 0.0;
+    scene->barrier.material.specular.red = 1.0;
+    scene->barrier.material.specular.green = 1.0;
+    scene->barrier.material.specular.blue = 1.0;
 
     scene->barrier.material.shininess = 0.0;
 }
@@ -206,9 +206,9 @@ void init_car(Scene* scene)
     scene->car.texture_tire_id = load_texture("textures/porsche02.bmp");
 
     /* Car's body materials */
-    scene->car.material_car_body.ambient.red = 1.0;
-    scene->car.material_car_body.ambient.green = 1.0;
-    scene->car.material_car_body.ambient.blue = 1.0;
+    scene->car.material_car_body.ambient.red = 0.0;
+    scene->car.material_car_body.ambient.green = 0.0;
+    scene->car.material_car_body.ambient.blue = 0.0;
     scene->car.material_car_body.ambient.alpha = 1.0;
 
     scene->car.material_car_body.diffuse.red = 1.0;
@@ -499,8 +499,6 @@ void update_scene(Scene* scene, Camera* camera, double time)
     }
     
 
-    printf("x:%f , y:%f\n", scene->car.position.x, scene->car.position.y);
-
     
 
     
@@ -573,7 +571,7 @@ void set_lighting(const Scene* scene)
     float ambient_light[] = { b, b, b, b };
     float diffuse_light[] = { b, b, b, b };
     float specular_light[] = { b, b, b, b };
-    float position[] = { 0.0f, 0.0f, 10.0f, 1.0f };
+    float position[] = { 20.0f, -40.0f, 50.0f, 1.0f };
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_light);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
