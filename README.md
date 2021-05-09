@@ -21,5 +21,6 @@ A földhöz és az utakhoz glVertex3f-szel rajzolom ki a lapokat és rakom rá a
 * A nappal és éjszaka bemutatására a nap fényerejének le- és felvétele a **'+'** és **'-'** billentyűkkel. Ehhez tartoznak az utcai lámpák fényei amik automatikusan fel vagy lekapcsolnak, hogyha levesszük a nap fényerejét egy adott százalék alá.
 * A hintaszék magától mozog az idő függvényével.
 * A program rendelkezik súgóval amit az **'F1'** billenytűvel hozhatunk elő.
+* A ködöt az **'F2'** billentyű segítségével tudjuk ki- és bekapcsolni.
 
 ### Mappa a modellekhez és textúrákhoz: https://1drv.ms/u/s!AocACvgp0az3jKhbi-YVpOF_Bwuerg?e=liiQJx
